@@ -9,9 +9,7 @@ export class BigBangEmpire {
     return `https://${process.env.BBE_SERVER}.bigbangempire.com`;
   }
 
-  protected constructor() {
-    console.log('construct');
-  }
+  protected constructor() {}
 
   async init(): Promise<void> {}
 }
