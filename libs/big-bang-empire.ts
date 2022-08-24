@@ -1,15 +1,17 @@
-export class BigBangEmpire {
-  private static _instance: BigBangEmpire;
+import request from './request';
 
-  static get instance(): BigBangEmpire {
-    return this._instance ?? (this._instance = new this());
+import environmentConfig from '../configs/environment';
+import staticConfig from '../configs/static';
+
+class BigBangEmpire {
+  userId = '0';
+
+  userSessionId = '0';
+
+  async init(): Promise<void> {
+    await staticConfig.init();
+    await environmentConfig.init();
   }
-
-  get baseUrl(): string {
-    return `https://${process.env.BBE_SERVER}.bigbangempire.com`;
-  }
-
-  protected constructor() {}
-
-  async init(): Promise<void> {}
 }
+
+export default new BigBangEmpire();

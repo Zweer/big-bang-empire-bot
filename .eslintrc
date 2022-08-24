@@ -10,6 +10,9 @@
   },
   "rules": {
     "no-console": "off",
-    "no-process-env": "off"
+    "no-process-env": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "line-comment-position": "off",
+    "import/no-cycle": "off"
   }
 }
