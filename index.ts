@@ -6,5 +6,4 @@ async function main() {
   console.log(BigBangEmpire.instance.baseUrl);
 }
 
-main()
-  .catch((error) => console.error(error));
+main().catch((error) => console.error(error));
