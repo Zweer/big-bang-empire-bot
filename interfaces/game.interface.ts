@@ -341,6 +341,13 @@ interface Goal {
   current_value: number;
 }
 
+interface CollectedGoal {
+  [key: string]: {
+    value: number;
+    date: string;
+  };
+}
+
 interface ItemPatternValue {
   value: number;
   collected_items: [];
@@ -473,7 +480,7 @@ export interface GameInterface {
   movie_tournament_end_timestamp: number;
   global_tournament_end_timestamp: number;
   current_goal_values: { [key: string]: Goal };
-  collected_goals: [];
+  collected_goals: CollectedGoal[];
   current_item_pattern_values: { [key: string]: ItemPatternValue };
   collected_item_pattern: [];
   current_optical_changes: {

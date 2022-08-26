@@ -5,6 +5,7 @@ import { GameInterface } from '../interfaces/game.interface';
 import authModule from '../modules/auth.module';
 import characterModule from '../modules/character.module';
 import friendsModule from '../modules/friends.module';
+import profileModule from '../modules/profile.module';
 
 class BigBangEmpire {
   get userId(): string {
@@ -35,7 +36,11 @@ class BigBangEmpire {
     while (!this.stop) {
       await authModule.sync();
 
+      await profileModule.checkTutorialFlags();
+      await profileModule.checkGoals();
       await characterModule.checkStats();
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 }

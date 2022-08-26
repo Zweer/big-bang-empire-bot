@@ -178,7 +178,7 @@ interface GlobalTournamentReward {
   reward_amount_2: number;
 }
 
-interface Goal {
+export interface Goal {
   index: number;
   active: boolean;
   goal_type: number;
