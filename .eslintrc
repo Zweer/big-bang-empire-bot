@@ -15,6 +15,7 @@
     "line-comment-position": "off",
     "import/no-cycle": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
-    "prettier/prettier": "warn"
+    "prettier/prettier": "warn",
+    "no-warning-comments": "off"
   }
 }

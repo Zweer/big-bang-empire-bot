@@ -28,6 +28,7 @@
     "change-case": "^4.1.2",
     "dotenv": "^16.0.1",
     "lodash": "^4.17.21",
+    "numbro": "^2.3.6",
     "pluralize": "^8.0.0"
   }
 }

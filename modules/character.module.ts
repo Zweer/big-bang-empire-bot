@@ -16,6 +16,16 @@ class CharacterModule {
     };
   }
 
+  get statsTotal(): number {
+    return [
+      bigBangEmpire.game.character.stat_total_strength,
+      bigBangEmpire.game.character.stat_total_stamina,
+      bigBangEmpire.game.character.stat_total_dodge_rating,
+      bigBangEmpire.game.character.stat_total_critical_rating,
+      bigBangEmpire.game.character.stat_weapon_damage,
+    ].reduce((sum, stat) => sum + stat, 0);
+  }
+
   async checkStats(): Promise<void> {
     if (this.hasStatPointsAvailable) {
       console.log(

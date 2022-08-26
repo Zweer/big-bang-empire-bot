@@ -31,3 +31,5 @@ export type Locale =
   | 'es_CO'
   | 'es_CL'
   | 'en_WO';
+
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;

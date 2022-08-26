@@ -4,6 +4,7 @@ import staticConfig from '../configs/static';
 import { GameInterface } from '../interfaces/game.interface';
 import authModule from '../modules/auth.module';
 import characterModule from '../modules/character.module';
+import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
 import profileModule from '../modules/profile.module';
 
@@ -38,7 +39,12 @@ class BigBangEmpire {
 
       await profileModule.checkTutorialFlags();
       await profileModule.checkGoals();
+      await profileModule.getDailyBonusRewardData();
+
       await characterModule.checkStats();
+
+      await duelsModule.checkMissedDuels();
+      await duelsModule.autoDuel();
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }

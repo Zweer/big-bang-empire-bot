@@ -43,7 +43,16 @@ class Request {
     }
 
     if (mergeGame) {
-      bigBangEmpire.game = mergeWith(bigBangEmpire.game ?? {}, data.data);
+      bigBangEmpire.game = mergeWith(
+        bigBangEmpire.game ?? {},
+        data.data,
+        // eslint-disable-next-line consistent-return
+        (objValue: any, srcValue: any, key: string) => {
+          if (key === 'collected_goals') {
+            return objValue.concat(srcValue);
+          }
+        },
+      );
     }
 
     return data.data;
