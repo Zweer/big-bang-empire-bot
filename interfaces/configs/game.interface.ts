@@ -1,6 +1,6 @@
 import { Locale } from '../utils';
 
-import { EnvironmentInterface } from './environment.interface';
+import { EnvironmentConfigInterface } from './environment.interface';
 
 interface BattleEffect {
   battle_skill_ids: number[];
@@ -565,7 +565,7 @@ interface LeaderboardServerSelectionData {
   server_ids: string[];
 }
 
-export interface GameInterface {
+export interface GameConfigInterface {
   constants: {
     tolerance_small: number;
     tolerance_medium: number;
@@ -1377,6 +1377,6 @@ export interface GameInterface {
     tournament_rewards: TournamentReward[];
     warforged_infos: { [key: string]: WarforgedReward };
   };
-  extendedConfig: EnvironmentInterface['extendedConfig'];
+  extendedConfig: EnvironmentConfigInterface['extendedConfig'];
   leaderboard_server_selection_data: { [key in Locale]: LeaderboardServerSelectionData };
 }

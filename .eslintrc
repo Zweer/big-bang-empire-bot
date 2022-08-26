@@ -13,6 +13,7 @@
     "no-process-env": "off",
     "@typescript-eslint/naming-convention": "off",
     "line-comment-position": "off",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "@typescript-eslint/no-unnecessary-condition": "off"
   }
 }

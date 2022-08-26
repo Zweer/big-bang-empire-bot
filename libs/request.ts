@@ -1,23 +1,35 @@
 import { createHash } from 'crypto';
 
 import axios from 'axios';
+import { mergeWith } from 'lodash';
 
 import { Response } from '../interfaces/response';
 import staticConfig from '../configs/static';
 
-import bbe from './big-bang-empire';
+import bigBangEmpire from './big-bang-empire';
 
 class Request {
-  async post<TResponse, TRequest = null>(action: string, params?: TRequest): Promise<TResponse> {
+  appVersion = '123';
+
+  get clientVersion(): string {
+    return `html5_${this.appVersion}`;
+  }
+
+  async post<TResponse, TRequest extends { [key: string]: string } = { [key: string]: string }>(
+    action: string,
+    params?: TRequest,
+    mergeGame = true,
+  ): Promise<TResponse> {
     const allParams = {
       action,
-      user_id: bbe.userId,
-      user_session_id: bbe.userSessionId,
-      client_version: 'html5_123',
+      user_id: bigBangEmpire.userId,
+      user_session_id: bigBangEmpire.userSessionId,
+      client_version: this.clientVersion,
       rct: '1',
       keep_active: 'true',
       device_type: 'web',
-      auth: this.getAuth(action, bbe.userId),
+      auth: this.getAuth(action, bigBangEmpire.userId),
+      ...params,
     };
 
     const { data } = await axios.post<Response<TResponse>>(
@@ -28,6 +40,10 @@ class Request {
 
     if (data.error) {
       throw new Error(`${data.error} while requesting ${action}`);
+    }
+
+    if (mergeGame) {
+      bigBangEmpire.game = mergeWith(bigBangEmpire.game ?? {}, data.data);
     }
 
     return data.data;

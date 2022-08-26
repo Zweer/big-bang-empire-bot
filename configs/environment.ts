@@ -1,15 +1,15 @@
-import { EnvironmentInterface } from '../interfaces/configs/environment.interface';
-import { GameInterface } from '../interfaces/configs/game.interface';
+import { EnvironmentConfigInterface } from '../interfaces/configs/environment.interface';
+import { GameConfigInterface } from '../interfaces/configs/game.interface';
 import request from '../libs/request';
 
 class EnvironmentConfig {
-  environment!: EnvironmentInterface;
+  environment!: EnvironmentConfigInterface;
 
-  game!: GameInterface;
+  game!: GameConfigInterface;
 
   async init(): Promise<void> {
-    this.environment = await request.post<EnvironmentInterface>('initEnvironment');
-    this.game = await request.post<GameInterface>('initGame');
+    this.environment = await request.post<EnvironmentConfigInterface>('initEnvironment', {}, false);
+    this.game = await request.post<GameConfigInterface>('initGame', {}, false);
   }
 }
 

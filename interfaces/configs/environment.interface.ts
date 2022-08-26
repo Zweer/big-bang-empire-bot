@@ -144,7 +144,7 @@ interface Texture {
   size: number;
 }
 
-export interface EnvironmentInterface {
+export interface EnvironmentConfigInterface {
   version_check: 'ok';
   extendedConfig: {
     auth: 'VBmalgt2';
