@@ -81,6 +81,10 @@ class ProfileModule {
 
   async getDailyBonusRewardData(): Promise<void> {
     await request.post('getDailyBonusRewardData');
+
+    if (bigBangEmpire.game.daily_login_bonus_rewards && bigBangEmpire.game.daily_login_bonus_day) {
+      // TODO
+    }
   }
 }
 

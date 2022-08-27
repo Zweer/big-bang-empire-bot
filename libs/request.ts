@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 
 import axios from 'axios';
-import { mergeWith } from 'lodash';
+import { isArray, mergeWith } from 'lodash';
 
 import { Response } from '../interfaces/response';
 import staticConfig from '../configs/static';
@@ -48,7 +48,7 @@ class Request {
         data.data,
         // eslint-disable-next-line consistent-return
         (objValue: any, srcValue: any, key: string) => {
-          if (key === 'collected_goals') {
+          if (['collected_goals', 'item'].includes(key) && isArray(objValue)) {
             return objValue.concat(srcValue);
           }
         },

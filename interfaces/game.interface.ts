@@ -199,7 +199,7 @@ export interface CharacterInterface {
   active_season_progress_id: number;
 }
 
-interface Inventory {
+export interface InventoryInterface {
   id: number;
   character_id: number;
   head_item_id: number;
@@ -285,7 +285,7 @@ interface BankInventory {
   item_set_data: string;
 }
 
-interface Item {
+export interface ItemInterface {
   id: number;
   character_id: number;
   identifier: string;
@@ -449,10 +449,10 @@ export interface GameInterface {
   character: CharacterInterface;
   user_geo_location: string;
   has_marketing_email: boolean;
-  inventory: Inventory;
+  inventory: InventoryInterface;
   bank_inventory: BankInventory;
   quests: Quest[];
-  items: Item[];
+  items: ItemInterface[];
   completed_story_dungeons: [];
   campaigns: {
     starting_premium_currency: {
@@ -509,6 +509,15 @@ export interface GameInterface {
   completed_dating_steps: [];
   marriages: [];
   daily_bonus_lookup: DailyBonusLookup;
+  daily_login_bonus_day: number;
+  daily_login_bonus_rewards: {
+    [key: string]: {
+      rewardType1: number;
+      rewardType1Amount?: number;
+      rewardType2: number;
+      rewardType2Amount?: number;
+    };
+  };
   ad_provider_keys: string[];
   user_voucher_rewards: [];
   news: News[];

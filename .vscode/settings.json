@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "config",
         "goals",
-        "duels"
+        "duels",
+        "character"
     ]
 }

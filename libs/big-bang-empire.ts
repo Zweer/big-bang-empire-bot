@@ -42,6 +42,7 @@ class BigBangEmpire {
       await profileModule.getDailyBonusRewardData();
 
       await characterModule.checkStats();
+      await characterModule.improveInventory();
 
       await duelsModule.checkMissedDuels();
       await duelsModule.autoDuel();
