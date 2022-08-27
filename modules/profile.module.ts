@@ -17,7 +17,7 @@ class ProfileModule {
         const goal = environmentConfig.game.constants.goals[name];
         const maxPreviousStep = Object.keys(goal.values)
           .map((previousValue) => parseInt(previousValue, 10))
-          .filter((previousValue) => previousValue < value)
+          .filter((previousValue) => previousValue <= value)
           .reduce(
             (maxPreviousStepValue, previousValue) =>
               previousValue >= maxPreviousStepValue ? previousValue : maxPreviousStepValue,
