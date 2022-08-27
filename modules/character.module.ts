@@ -138,7 +138,7 @@ class Inventory {
       .filter(([key, id]) => key.startsWith(Inventory.BAG_PREFIX) && id > 0)
       .map(([key, id]) => {
         const bagSlotId = parseInt(
-          new RegExp(`${Inventory.BAG_PREFIX}(.*)${Inventory.SUFFIX}`).exec(key)[1],
+          (new RegExp(`${Inventory.BAG_PREFIX}(.*)${Inventory.SUFFIX}`).exec(key) as string[])[1],
           10,
         );
 
@@ -149,7 +149,7 @@ class Inventory {
       .filter(([key, id]) => key.startsWith(Inventory.SHOP_PREFIX) && id > 0)
       .map(([key, id]) => {
         const shopSlotId = parseInt(
-          new RegExp(`${Inventory.SHOP_PREFIX}(.*)${Inventory.SUFFIX}`).exec(key)[1],
+          (new RegExp(`${Inventory.SHOP_PREFIX}(.*)${Inventory.SUFFIX}`).exec(key) as string[])[1],
           10,
         );
 
@@ -213,44 +213,67 @@ class CharacterModule {
   async improveInventory(): Promise<void> {
     const inventory = new Inventory(bigBangEmpire.game.inventory, bigBangEmpire.game.items);
 
-    await inventory.bagItems.reduce(async (promise, bagItem) => {
+    const checkItem = (isShop: boolean) => async (promise: Promise<void>, otherItem: Item) => {
       await promise;
 
-      const oldItems = inventory.items.filter((item) => bagItem.type === item.type);
+      const oldItems = inventory.items.filter((item) => otherItem.type === item.type);
 
       if (oldItems.length === 0) {
-        console.log(`Found an item for slot ${ItemType[bagItem.type]}!`);
-        await this.moveInventoryItem(bagItem);
+        let bought: boolean;
+        if (isShop) {
+          bought = await this.buyShopItem(otherItem);
+        } else {
+          bought = await this.moveInventoryItem(otherItem);
+        }
+
+        if (bought) {
+          console.log(`Found an item for slot ${ItemType[otherItem.type]}!`);
+        }
+
         return;
       }
 
       const oldItem = oldItems.find(
-        (item) => bagItem.statsTotal > item.statsTotal || bagItem.battleSkill,
+        (item) => otherItem.statsTotal > item.statsTotal || otherItem.battleSkill,
       );
 
       if (!oldItem) {
-        console.log(`Selling item ${bagItem.identifier}`);
-        await this.sellItem(bagItem);
+        if (!isShop) {
+          console.log(`Selling item ${otherItem.identifier}`);
+          await this.sellItem(otherItem);
+        }
         return;
       }
 
       if (oldItem.battleSkill) {
         console.log(
           `Found a possibly better item for ${
-            ItemType[bagItem.type]
-          } slot, but they both have battle skill (${bagItem.statsTotal} vs ${oldItem.statsTotal})`,
+            ItemType[otherItem.type]
+          } slot, but they both have battle skill (${otherItem.statsTotal} vs ${
+            oldItem.statsTotal
+          })`,
         );
         return;
       }
 
-      console.log(`Found a better item in the inventory for ${ItemType[bagItem.type]} slot:`);
-      console.log(`  ${bagItem.statsTotal} vs ${oldItem.statsTotal}`);
-      if (bagItem.battleSkill) {
-        console.log(`  with battle skill!`);
+      let bought: boolean;
+      if (isShop) {
+        bought = await this.buyShopItem(otherItem);
+      } else {
+        bought = await this.moveInventoryItem(otherItem);
       }
 
-      await this.moveInventoryItem(bagItem);
-    }, Promise.resolve());
+      if (bought) {
+        console.log(`Found a better item in the inventory for ${ItemType[otherItem.type]} slot:`);
+        console.log(`  ${otherItem.statsTotal} vs ${oldItem.statsTotal}`);
+        if (otherItem.battleSkill) {
+          console.log(`  with battle skill!`);
+        }
+      }
+    };
+
+    await inventory.bagItems.reduce(checkItem(false), Promise.resolve());
+    await inventory.shopItems.reduce(checkItem(true), Promise.resolve());
   }
 
   async sellItem(item: Item): Promise<void> {
@@ -259,12 +282,30 @@ class CharacterModule {
     });
   }
 
-  async moveInventoryItem(item: Item): Promise<void> {
+  async buyShopItem(item: Item, usePremium = false): Promise<boolean> {
+    if (
+      (!item.premiumItem && item.buyPrice < bigBangEmpire.game.character.game_currency) ||
+      (item.premiumItem && item.buyPrice < bigBangEmpire.game.user.premium_currency && usePremium)
+    ) {
+      await request.post('buyShopItem', {
+        item_id: item.id.toString(),
+        target_slot: item.type.toString(),
+      });
+
+      return true;
+    }
+
+    return false;
+  }
+
+  async moveInventoryItem(item: Item): Promise<boolean> {
     await request.post('moveInventoryItem', {
       item_id: item.id.toString(),
       target_slot: item.type.toString(),
       action_type: '3',
     });
+
+    return true;
   }
 }
 
