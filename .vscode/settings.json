@@ -3,6 +3,7 @@
         "config",
         "goals",
         "duels",
-        "character"
+        "character",
+        "story"
     ]
 }

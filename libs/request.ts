@@ -48,8 +48,11 @@ class Request {
         data.data,
         // eslint-disable-next-line consistent-return
         (objValue: any, srcValue: any, key: string) => {
-          if (['collected_goals', 'item'].includes(key) && isArray(objValue)) {
+          if (['collected_goals'].includes(key) && isArray(objValue)) {
             return objValue.concat(srcValue);
+          }
+          if (['items', 'quests'].includes(key) && isArray(objValue)) {
+            return srcValue;
           }
         },
       );

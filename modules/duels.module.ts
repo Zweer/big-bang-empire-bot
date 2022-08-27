@@ -1,11 +1,11 @@
 import numbro from 'numbro';
 import pluralize from 'pluralize';
 
+import { RewardInterface } from '../interfaces/common';
 import { BattleInterface } from '../interfaces/duels/battle.interface';
 import { DuelInterface } from '../interfaces/duels/duel.interface';
 import { GetDuelOpponentsInterface } from '../interfaces/duels/getDuelOpponents.interface';
 import {
-  DuelRewardInterface,
   MissedDuelInterface,
   MissedDuelsInterface,
 } from '../interfaces/duels/missedDuels.interface';
@@ -119,7 +119,7 @@ class Opponent {
 class MissedDuel {
   id: number;
   opponentId: number;
-  rewards: DuelRewardInterface;
+  rewards: RewardInterface;
   tsCreation: Date;
   unread: boolean;
   winner: boolean;
@@ -127,10 +127,10 @@ class MissedDuel {
   constructor(missedDuel: MissedDuelInterface) {
     this.id = missedDuel.id;
     this.opponentId = missedDuel.opponent_id;
-    this.rewards = missedDuel.character_a_rewards && JSON.parse(missedDuel.character_a_rewards);
+    this.rewards = missedDuel.character_b_rewards && JSON.parse(missedDuel.character_b_rewards);
     this.tsCreation = new Date(missedDuel.ts_creation * 1000);
     this.unread = missedDuel.unread;
-    this.winner = missedDuel.winner === 'a';
+    this.winner = missedDuel.winner === 'b';
   }
 }
 
@@ -160,8 +160,8 @@ class Duel {
   characterBId: number;
   characterAStatus: number;
   characterBStatus: number;
-  characterARewards: DuelRewardInterface;
-  characterBRewards: DuelRewardInterface;
+  characterARewards: RewardInterface;
+  characterBRewards: RewardInterface;
 
   constructor(duel: DuelInterface) {
     this.id = duel.id;

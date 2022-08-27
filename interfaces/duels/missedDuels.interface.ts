@@ -3,17 +3,7 @@ import { UserInterface } from '../game.interface';
 import { DuelCharacterInterface } from './duelCharacter.interface';
 import { OpponentInterface } from './opponent.interface';
 
-export interface DuelRewardInterface {
-  coins: number;
-  honor: number;
-  item: number;
-  premium: number;
-  statPoints: number;
-  xp: number;
-}
-
 export interface MissedDuelInterface {
-  character_a_rewards: string;
   character_b_rewards: string;
   id: number;
   opponent_id: number;

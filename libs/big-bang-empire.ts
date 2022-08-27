@@ -7,6 +7,7 @@ import characterModule from '../modules/character.module';
 import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
 import profileModule from '../modules/profile.module';
+import storyModule from '../modules/story.module';
 
 class BigBangEmpire {
   get userId(): string {
@@ -46,6 +47,9 @@ class BigBangEmpire {
 
       await duelsModule.checkMissedDuels();
       await duelsModule.autoDuel();
+
+      await storyModule.checkForQuestComplete();
+      await storyModule.autoQuest();
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }

@@ -308,7 +308,7 @@ export interface ItemInterface {
   battle_skill: string;
 }
 
-interface Quest {
+export interface QuestInterface {
   id: number;
   character_id: number;
   identifier: string;
@@ -451,7 +451,7 @@ export interface GameInterface {
   has_marketing_email: boolean;
   inventory: InventoryInterface;
   bank_inventory: BankInventory;
-  quests: Quest[];
+  quests: QuestInterface[];
   items: ItemInterface[];
   completed_story_dungeons: [];
   campaigns: {
