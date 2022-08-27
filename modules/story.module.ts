@@ -114,10 +114,12 @@ class StoryModule {
   async autoQuest(): Promise<void> {
     if (!this.hasEnergy) {
       console.debug(`Not enough energy to quest`);
+      return;
     }
 
     if (this.anotherQuestInProgress) {
       console.debug(`Another quest in progress`);
+      return;
     }
 
     const quests = bigBangEmpire.game.quests

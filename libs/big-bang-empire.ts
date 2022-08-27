@@ -4,6 +4,7 @@ import staticConfig from '../configs/static';
 import { GameInterface } from '../interfaces/game.interface';
 import authModule from '../modules/auth.module';
 import characterModule from '../modules/character.module';
+import datingModule from '../modules/dating.module';
 import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
 import profileModule from '../modules/profile.module';
@@ -41,6 +42,8 @@ class BigBangEmpire {
       await profileModule.checkTutorialFlags();
       await profileModule.checkGoals();
       await profileModule.getDailyBonusRewardData();
+
+      await datingModule.checkStep();
 
       await characterModule.checkStats();
       await characterModule.improveInventory();

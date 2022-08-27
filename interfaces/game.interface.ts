@@ -444,6 +444,18 @@ interface News {
   items: NewsItem[];
 }
 
+export interface DatingStepInterface {
+  id: number;
+  character_id: number;
+  repeat: boolean;
+  dating_index: number;
+  step_index: number;
+  status: number;
+  points_collected: number;
+  ts_last_attack: number;
+  rewards: string;
+}
+
 export interface GameInterface {
   user: UserInterface;
   character: CharacterInterface;
@@ -506,6 +518,7 @@ export interface GameInterface {
   new_version: boolean;
   login_count: number;
   server_timestamp_offset: number;
+  dating_step: DatingStepInterface[];
   completed_dating_steps: [];
   marriages: [];
   daily_bonus_lookup: DailyBonusLookup;

@@ -59,8 +59,6 @@ class ProfileModule {
       (promise, currentGoal) => promise.then(() => this.collectGoalReward(currentGoal)),
       Promise.resolve(),
     );
-
-    console.log(environmentConfig);
   }
 
   async collectGoalReward({
