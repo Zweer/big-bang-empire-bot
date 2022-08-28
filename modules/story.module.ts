@@ -33,7 +33,7 @@ class Quest {
   rewards: RewardInterface;
 
   get rewardsCount(): number {
-    return Object.keys(this.rewards).filter((reward) => reward === 'movie_votes').length;
+    return Object.keys(this.rewards).filter((reward) => reward !== 'movie_votes').length;
   }
 
   get superRewards(): { [key: string]: number } {
