@@ -309,6 +309,21 @@ class CharacterModule {
 
     return true;
   }
+
+  async refreshShop(): Promise<void> {
+    if (
+      bigBangEmpire.game.character.max_free_shop_refreshes >
+      bigBangEmpire.game.character.shop_refreshes
+    ) {
+      await this.refreshShopItems();
+    }
+  }
+
+  async refreshShopItems(usePremium = false) {
+    await request.post('refreshShopItems', {
+      use_premium: usePremium ? 'true' : 'false',
+    });
+  }
 }
 
 export default new CharacterModule();
