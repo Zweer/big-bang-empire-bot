@@ -54,10 +54,6 @@ class DatingModule {
           await this.startNewDatingStep(datingStep);
         }
       }, Promise.resolve());
-
-    if (datingSteps.some((datingStep) => datingStep.status !== DatingStepStatus.Finished)) {
-      console.log('Dating finished!!!');
-    }
   }
 
   async claimDatingStepReward(datingStep: DatingStep) {
