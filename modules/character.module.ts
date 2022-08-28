@@ -143,7 +143,8 @@ class Inventory {
         );
 
         return createItem(id, bagSlotId) as Item;
-      });
+      })
+      .filter((item) => item);
 
     this.shopItems = Object.entries(inventory)
       .filter(([key, id]) => key.startsWith(Inventory.SHOP_PREFIX) && id > 0)
@@ -154,7 +155,8 @@ class Inventory {
         );
 
         return createItem(id, 0, shopSlotId) as Item;
-      });
+      })
+      .filter((item) => item);
 
     this.itemSetData = inventory.item_set_data;
   }
