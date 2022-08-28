@@ -1,11 +1,11 @@
 {
     "conventionalCommits.scopes": [
-        "config",
-        "goals",
-        "duels",
         "character",
-        "story",
+        "config",
         "dating",
-        "season"
+        "duels",
+        "goals",
+        "season",
+        "story"
     ]
 }
