@@ -51,7 +51,7 @@ class Request {
           if (['collected_goals', 'items'].includes(key) && isArray(objValue)) {
             return objValue.concat(srcValue);
           }
-          if (['quests'].includes(key) && isArray(objValue)) {
+          if (['quests', 'season_rewards'].includes(key) && isArray(objValue)) {
             return srcValue;
           }
         },
