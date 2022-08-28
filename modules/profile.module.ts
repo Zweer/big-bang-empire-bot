@@ -84,6 +84,14 @@ class ProfileModule {
       // TODO
     }
   }
+
+  // TODO
+  async claimDailyBonusRewardReward(dailyBonusReward): Promise<void> {
+    await request.post('claimDailyBonusRewardReward', {
+      id: dailyBonusReward.id,
+      discard_item: 'false',
+    });
+  }
 }
 
 export default new ProfileModule();
