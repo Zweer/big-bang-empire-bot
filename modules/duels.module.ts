@@ -194,7 +194,7 @@ class DuelsModule {
   }
 
   get canDuel(): boolean {
-    return this.duelStamina > this.duelStaminCost;
+    return this.duelStamina >= this.duelStaminCost;
   }
 
   async checkMissedDuels() {
