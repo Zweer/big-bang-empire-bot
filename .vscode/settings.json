@@ -9,6 +9,7 @@
         "story",
         "dailyBonus",
         "movie",
-        "booster"
+        "booster",
+        "messages"
     ]
 }
