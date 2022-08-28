@@ -6,6 +6,18 @@ import bigBangEmpire from '../libs/big-bang-empire';
 import request from '../libs/request';
 
 class ProfileModule {
+  get hasBoosterForQuests(): boolean {
+    return bigBangEmpire.game.character.active_quest_booster_id !== '';
+  }
+
+  get hasBoosterForStats(): boolean {
+    return bigBangEmpire.game.character.active_stats_booster_id !== '';
+  }
+
+  get hasBoosterForWork(): boolean {
+    return bigBangEmpire.game.character.active_work_booster_id !== '';
+  }
+
   async checkTutorialFlags(): Promise<void> {
     // no ideas
   }
@@ -90,6 +102,26 @@ class ProfileModule {
     await request.post('claimDailyBonusRewardReward', {
       id: dailyBonusReward.id,
       discard_item: 'false',
+    });
+  }
+
+  async checkBoosters() {
+    if (!this.hasBoosterForQuests) {
+      await this.buyBooster('booster_quest2');
+    }
+
+    if (!this.hasBoosterForStats) {
+      await this.buyBooster('booster_stats2');
+    }
+
+    if (!this.hasBoosterForWork) {
+      await this.buyBooster('booster_work2');
+    }
+  }
+
+  async buyBooster(booster: string) {
+    await request.post('buyBooster', {
+      id: booster,
     });
   }
 }

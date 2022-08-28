@@ -45,6 +45,7 @@ class BigBangEmpire {
       await profileModule.checkTutorialFlags();
       await profileModule.checkGoals();
       await profileModule.getDailyBonusRewardData();
+      await profileModule.checkBoosters();
 
       await datingModule.checkStep();
 

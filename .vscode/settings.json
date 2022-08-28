@@ -8,6 +8,7 @@
         "season",
         "story",
         "dailyBonus",
-        "movie"
+        "movie",
+        "booster"
     ]
 }
