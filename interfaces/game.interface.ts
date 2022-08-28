@@ -456,6 +456,30 @@ export interface DatingStepInterface {
   rewards: string;
 }
 
+export interface SeasonProgressInterface {
+  character_id: number;
+  id: number;
+  identifier: string;
+  premium_unlocked: boolean;
+  season_id: number;
+  season_points: number;
+  status: number;
+  ts_created: number;
+  ts_end: number;
+  ts_start: number;
+}
+
+export interface SeasonRewardInterface {
+  character_id: number;
+  id: number;
+  premium: boolean;
+  rewards: string;
+  season_points: number;
+  season_progress_id: number;
+  status: number;
+  ts_created: number;
+}
+
 export interface GameInterface {
   user: UserInterface;
   character: CharacterInterface;
@@ -534,4 +558,6 @@ export interface GameInterface {
   ad_provider_keys: string[];
   user_voucher_rewards: [];
   news: News[];
+  season_progress: SeasonProgressInterface;
+  season_rewards: SeasonRewardInterface[];
 }

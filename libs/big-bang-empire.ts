@@ -8,6 +8,7 @@ import datingModule from '../modules/dating.module';
 import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
 import profileModule from '../modules/profile.module';
+import seasonModule from '../modules/season.module';
 import storyModule from '../modules/story.module';
 
 class BigBangEmpire {
@@ -38,6 +39,8 @@ class BigBangEmpire {
   async cycle(): Promise<void> {
     while (!this.stop) {
       await authModule.sync();
+
+      await seasonModule.checkCompletedStep();
 
       await profileModule.checkTutorialFlags();
       await profileModule.checkGoals();
