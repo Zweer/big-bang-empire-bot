@@ -1,15 +1,15 @@
 {
     "conventionalCommits.scopes": [
+        "booster",
         "character",
         "config",
+        "dailyBonus",
         "dating",
         "duels",
         "goals",
-        "season",
-        "story",
-        "dailyBonus",
+        "messages",
         "movie",
-        "booster",
-        "messages"
+        "season",
+        "story"
     ]
 }
