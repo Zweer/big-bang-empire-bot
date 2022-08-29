@@ -7,6 +7,7 @@ import { Response } from '../interfaces/response';
 import staticConfig from '../configs/static';
 
 import bigBangEmpire from './big-bang-empire';
+import logger from './log';
 
 class Request {
   appVersion = '123';
@@ -31,6 +32,8 @@ class Request {
       auth: this.getAuth(action, bigBangEmpire.userId),
       ...params,
     };
+
+    logger.silly(`Requesting "${action}"`);
 
     const { data } = await axios.post<Response<TResponse>>(
       staticConfig.urlRequestServer,

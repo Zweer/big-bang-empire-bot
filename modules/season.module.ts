@@ -2,6 +2,7 @@ import environmentConfig from '../configs/environment';
 import { RewardInterface } from '../interfaces/common';
 import { SeasonRewardInterface } from '../interfaces/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 enum SeasonRewardStatus {
@@ -48,7 +49,7 @@ class SeasonModule {
           .reduce(async (promise, seasonReward) => {
             await promise;
 
-            console.log(`Finished season step ${seasonReward.id}`);
+            logger.info(`Finished season step ${seasonReward.id}`);
 
             await this.claimSeasonReward(seasonReward);
           }, Promise.resolve());

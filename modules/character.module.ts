@@ -1,5 +1,6 @@
 import { InventoryInterface, ItemInterface, StatType } from '../interfaces/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 enum ItemType {
@@ -188,10 +189,10 @@ class CharacterModule {
 
   async checkStats(): Promise<void> {
     if (this.hasStatPointsAvailable) {
-      console.log(
+      logger.info(
         `Stat points available: ${bigBangEmpire.game.character.stat_points_available}...`,
       );
-      console.debug('Calculating the better place for the stat point');
+      logger.debug('Calculating the better place for the stat point');
 
       const [[stat, value]] = Object.entries(this.statPoints).sort(
         ([, valueA], [, valueB]) => valueA - valueB,
@@ -199,7 +200,7 @@ class CharacterModule {
 
       const statInt = parseInt(stat, 10);
 
-      console.log(`Adding one stat point to ${StatType[statInt]}: ${value} -> ${value + 1}`);
+      logger.info(`Adding one stat point to ${StatType[statInt]}: ${value} -> ${value + 1}`);
 
       await this.improveStat(statInt);
     }
@@ -229,7 +230,7 @@ class CharacterModule {
         }
 
         if (bought) {
-          console.log(`Found an item for slot ${ItemType[otherItem.type]}!`);
+          logger.info(`Found an item for slot ${ItemType[otherItem.type]}!`);
         }
 
         return;
@@ -241,14 +242,14 @@ class CharacterModule {
 
       if (!oldItem) {
         if (!isShop) {
-          console.log(`Selling item ${otherItem.identifier}`);
+          logger.info(`Selling item ${otherItem.identifier}`);
           await this.sellItem(otherItem);
         }
         return;
       }
 
       if (oldItem.battleSkill) {
-        console.log(
+        logger.info(
           `Found a possibly better item for ${
             ItemType[otherItem.type]
           } slot, but they both have battle skill (${otherItem.statsTotal} vs ${
@@ -266,10 +267,10 @@ class CharacterModule {
       }
 
       if (bought) {
-        console.log(`Found a better item in the inventory for ${ItemType[otherItem.type]} slot:`);
-        console.log(`  ${otherItem.statsTotal} vs ${oldItem.statsTotal}`);
+        logger.info(`Found a better item in the inventory for ${ItemType[otherItem.type]} slot:`);
+        logger.info(`  ${otherItem.statsTotal} vs ${oldItem.statsTotal}`);
         if (otherItem.battleSkill) {
-          console.log(`  with battle skill!`);
+          logger.info(`  with battle skill!`);
         }
       }
     };

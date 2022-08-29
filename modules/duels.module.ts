@@ -13,6 +13,7 @@ import { BattleData, OpponentInterface } from '../interfaces/duels/opponent.inte
 import { Gender } from '../interfaces/game.interface';
 import { Optional } from '../interfaces/utils';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 import characterModule from './character.module';
@@ -204,7 +205,7 @@ class DuelsModule {
 
   async checkMissedDuels() {
     if (this.hasMissedDuels) {
-      console.log(`There's ${pluralize('missed duel', this.missedDuels, true)}`);
+      logger.info(`There's ${pluralize('missed duel', this.missedDuels, true)}`);
 
       const { missed_duel_data, missed_duel_opponents } = await request.post<MissedDuelsInterface>(
         'getMissedDuelsNew',
@@ -225,15 +226,15 @@ class DuelsModule {
           throw new Error('Unknown opponent');
         }
 
-        console.log(`Missed duel: ${duel.winner ? 'WON' : 'LOST'}`);
-        console.log(
+        logger.info(`Missed duel: ${duel.winner ? 'WON' : 'LOST'}`);
+        logger.info(
           `  opponent: ${opponent.name} (${characterModule.statsTotal} vs ${opponent.statsTotal})`,
         );
         if (duel.winner) {
-          console.log('  rewards:');
+          logger.info('  rewards:');
           Object.entries(duel.rewards)
             .filter(([, value]) => value > 0)
-            .forEach(([what, value]) => console.log(`    ${what}: ${value}`));
+            .forEach(([what, value]) => logger.info(`    ${what}: ${value}`));
         }
       });
 
@@ -243,12 +244,12 @@ class DuelsModule {
 
   async autoDuel(): Promise<void> {
     if (!this.canDuel) {
-      console.debug(`You cannot duel: ${this.duelStamina} stamina`);
+      logger.debug(`You cannot duel: ${this.duelStamina} stamina`);
 
       return;
     }
 
-    console.log(`Enough stamina to duel (${this.duelStamina})`);
+    logger.info(`Enough stamina to duel (${this.duelStamina})`);
 
     const { opponents: opponentsRaw } = await request.post<GetDuelOpponentsInterface>(
       'getDuelOpponents',
@@ -269,7 +270,7 @@ class DuelsModule {
         return opponent.statsTotalWithMissile < characterModule.statsTotal;
       }) ?? opponents[0];
 
-    console.log(`Duelling with ${bestOpponent.name}`);
+    logger.info(`Duelling with ${bestOpponent.name}`);
 
     await this.duel(bestOpponent);
   }
@@ -283,13 +284,13 @@ class DuelsModule {
     const battle = new Battle(battleRaw);
     const duel = new Duel(duelRaw);
 
-    console.log(`You've ${battle.winner ? 'won' : 'lost'} the duel agains ${opponent.name}`);
-    console.log(`  honor: ${numbro(duel.characterARewards.honor).format({ forceSign: true })}`);
-    console.log(`  coins: ${duel.characterARewards.coins}`);
+    logger.info(`You've ${battle.winner ? 'won' : 'lost'} the duel agains ${opponent.name}`);
+    logger.info(`  honor: ${numbro(duel.characterARewards.honor).format({ forceSign: true })}`);
+    logger.info(`  coins: ${duel.characterARewards.coins}`);
     Object.entries(duel.characterARewards)
       .filter(([what]) => !['honor', 'coins'].includes(what))
       .filter(([, value]) => value > 0)
-      .forEach(([what, value]) => console.log(`  WOW! ${pluralize(what, value, true)}`));
+      .forEach(([what, value]) => logger.info(`  WOW! ${pluralize(what, value, true)}`));
 
     await request.post('checkForDuelComplete');
     await request.post('claimDuelRewards', {

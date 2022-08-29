@@ -1,6 +1,7 @@
 import { RewardInterface } from '../interfaces/common';
 import { QuestInterface } from '../interfaces/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 enum QuestStatus {
@@ -125,12 +126,12 @@ class StoryModule {
 
   async autoQuest(): Promise<void> {
     if (!this.hasEnergy) {
-      console.debug(`Not enough energy to quest`);
+      logger.debug(`Not enough energy to quest`);
       return;
     }
 
     if (this.anotherQuestInProgress) {
-      console.debug(`Another quest in progress`);
+      logger.debug(`Another quest in progress`);
       return;
     }
 
@@ -141,10 +142,10 @@ class StoryModule {
     const quest = quests.find((q) => q.energyCost < this.energy);
 
     if (quest) {
-      console.log(`Starting a new quest:`);
-      console.log(`  - ${quest.energyCost} energy`);
-      console.log(`  - ${Math.round(quest.effectiveness)} xp/energy`);
-      Object.keys(quest.superRewards).forEach((reward) => console.log(`  - with a ${reward}`));
+      logger.info(`Starting a new quest:`);
+      logger.info(`  - ${quest.energyCost} energy`);
+      logger.info(`  - ${Math.round(quest.effectiveness)} xp/energy`);
+      Object.keys(quest.superRewards).forEach((reward) => logger.info(`  - with a ${reward}`));
 
       await this.startQuest(quest);
     }

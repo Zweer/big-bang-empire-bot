@@ -4,6 +4,7 @@ import environment from '../configs/environment';
 import { RewardInterface } from '../interfaces/common';
 import { MovieInterface, MovieQuestInterface } from '../interfaces/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 class Movie {
@@ -198,7 +199,7 @@ class MovieModule {
       this.maxMoviesPerDay > this.moviesStartedToday &&
       this.tsLastMovieFinished.getTime() + 60 * 60 * 1000 < new Date().getTime()
     ) {
-      console.log(`You can film a movie!`);
+      logger.info(`You can film a movie!`);
 
       await this.refreshMoviePool();
 
@@ -208,7 +209,7 @@ class MovieModule {
 
       const movie = movies[0];
 
-      console.log(`  selecting the movie: +${pluralize('fan', movie.fans, true)}`);
+      logger.info(`  selecting the movie: +${pluralize('fan', movie.fans, true)}`);
 
       await this.startMovie(movie);
     }
@@ -234,27 +235,27 @@ class MovieModule {
       const quest = quests.find((quest) => quest.energyCost < this.movieEnergy);
 
       if (quest) {
-        console.log(`Starting a movie quest`);
+        logger.info(`Starting a movie quest`);
         if (quest.rewards.item) {
-          console.log(`  with an item!`);
+          logger.info(`  with an item!`);
         }
 
         await this.startMovieQuest(quest);
       } else {
-        console.log(`Not enough movie energy... waiting!`);
+        logger.info(`Not enough movie energy... waiting!`);
       }
-    }
 
-    if (
-      (this.movieActualEnergy > this.movieNeededEnergy1Star && this.movieStarsClaimed < 1) ||
-      (this.movieActualEnergy > this.movieNeededEnergy2Star && this.movieStarsClaimed < 2) ||
-      (this.movieActualEnergy > this.movieNeededEnergy3Star && this.movieStarsClaimed < 3)
-    ) {
-      await this.claimMovieStar();
-    }
+      if (
+        (this.movieActualEnergy > this.movieNeededEnergy1Star && this.movieStarsClaimed < 1) ||
+        (this.movieActualEnergy > this.movieNeededEnergy2Star && this.movieStarsClaimed < 2) ||
+        (this.movieActualEnergy > this.movieNeededEnergy3Star && this.movieStarsClaimed < 3)
+      ) {
+        await this.claimMovieStar();
+      }
 
-    if (this.movieActualEnergy === this.movieNeededEnergy) {
-      await this.finishMovie();
+      if (this.movieActualEnergy === this.movieNeededEnergy) {
+        await this.finishMovie();
+      }
     }
   }
 

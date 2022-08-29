@@ -2,6 +2,7 @@ import pluralize from 'pluralize';
 
 import { StreamInfoInterface } from '../interfaces/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 class MessagesModule {
@@ -15,11 +16,11 @@ class MessagesModule {
     const unreadMessages = unreadStreams.reduce((unread, stream) => (unread += stream.unread), 0);
 
     if (unreadMessages === 0) {
-      console.debug(`No unread messages`);
+      logger.debug(`No unread messages`);
       return;
     }
 
-    console.log(
+    logger.info(
       `You have ${pluralize('unread message', unreadMessages, true)} in ${pluralize(
         'stream',
         unreadStreams.length,

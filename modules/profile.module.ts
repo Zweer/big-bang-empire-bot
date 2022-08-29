@@ -3,6 +3,7 @@ import pluralize from 'pluralize';
 import environmentConfig from '../configs/environment';
 import { Goal } from '../interfaces/configs/game.interface';
 import bigBangEmpire from '../libs/big-bang-empire';
+import logger from '../libs/log';
 import request from '../libs/request';
 
 class ProfileModule {
@@ -57,11 +58,11 @@ class ProfileModule {
       });
 
     if (currentGoals.length === 0) {
-      console.debug('No goals to collect');
+      logger.debug('No goals to collect');
       return;
     }
 
-    console.log(
+    logger.info(
       `Reached ${pluralize('goal', currentGoals.length, true)}:\n${currentGoals
         .map(({ name }) => `- ${name}`)
         .join('\n')}`,
