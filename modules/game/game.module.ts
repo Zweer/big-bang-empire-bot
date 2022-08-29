@@ -58,6 +58,7 @@ class GameModule {
       await datingModule.checkStep();
 
       await characterModule.checkStats();
+      await characterModule.checkOpticalChanges();
       await inventoryModule.improveInventory();
 
       await duelsModule.checkMissedDuels();

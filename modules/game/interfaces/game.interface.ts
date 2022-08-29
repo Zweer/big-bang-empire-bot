@@ -1,4 +1,5 @@
 import { CharacterInterface } from '../../character/interfaces/character.interface';
+import { CurrentOpticalChangesInterface } from '../../character/interfaces/currentOpticalChanges.interface';
 import { DatingStepInterface } from '../../dating/interfaces/datingStep.interface';
 import { BattleInterface } from '../../duels/interfaces/battle.interface';
 import { DuelInterface } from '../../duels/interfaces/duel.interface';
@@ -342,16 +343,7 @@ export interface GameInterface {
   collected_goals: CollectedGoal[];
   current_item_pattern_values: { [key: string]: ItemPatternValue };
   collected_item_pattern: [];
-  current_optical_changes: {
-    id: number;
-    character_id: number;
-    resource: number;
-    available_chests: string;
-    active_options: string;
-    unlocked_options: string;
-    use_for_quest: boolean;
-    use_for_duel: boolean;
-  };
+  current_optical_changes: CurrentOpticalChangesInterface;
   collected_optical_changes: [];
   titles: [];
   special_offers: { [key: string]: SpecialOffer };
