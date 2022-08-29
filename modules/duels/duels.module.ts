@@ -103,7 +103,7 @@ class DuelsModule {
   }
 
   async startDuel(opponent: OpponentModel, usePremium = false): Promise<void> {
-    duelsService.startDuel(opponent, usePremium);
+    await duelsService.startDuel(opponent, usePremium);
 
     const battle = this.battle;
     const duel = this.duel;
