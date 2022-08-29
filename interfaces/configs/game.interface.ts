@@ -1,4 +1,5 @@
-import { Locale } from '../utils';
+import { Locale } from '../../modules/game/types';
+import { GoalInterface } from '../../modules/profile/interfaces/goal.interface';
 
 import { EnvironmentConfigInterface } from './environment.interface';
 
@@ -176,32 +177,6 @@ interface GlobalTournamentReward {
   reward_amount: number;
   reward_type_2: number;
   reward_amount_2: number;
-}
-
-export interface Goal {
-  index: number;
-  active: boolean;
-  goal_type: number;
-  mechanic_type: number;
-  lookup_column: string;
-  category: number;
-  story_goal_category: number;
-  required_goal: string;
-  required_level: number;
-  statistics: boolean;
-  hidden: boolean;
-  display_as_time: boolean;
-  values: {
-    [key: string]: {
-      story_goal: boolean;
-      reward_type: number;
-      reward_factor: number;
-      reward_identifier: string;
-      reward_title: null;
-      estimated_level: number;
-      text: string;
-    };
-  };
 }
 
 interface GuildArtifact {
@@ -1325,7 +1300,7 @@ export interface GameConfigInterface {
     event_items: { [key: string]: EventItem };
     event_quests: { [key: string]: EventQuest };
     global_tournament_rewards: GlobalTournamentReward[];
-    goals: { [key: string]: Goal };
+    goals: { [key: string]: GoalInterface };
     guild_arena_backgrounds: { [key: string]: GuildEmblem };
     guild_artifacts: { [key: string]: GuildArtifact };
     guild_background_layers: GuildBackgroundLayer[];

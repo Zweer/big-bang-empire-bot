@@ -4,7 +4,7 @@ import {
   SpecialOffer,
   StandalonePaymentOffersInterface,
 } from '../interfaces/configs/standalonePaymentOffers.interface';
-import bigBangEmpire from '../libs/big-bang-empire';
+import bigBangEmpire from '../modules/game/game.module';
 import request from '../libs/request';
 
 class StandalonePaymentOffers {

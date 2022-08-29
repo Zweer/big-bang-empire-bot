@@ -1,3 +1,3 @@
-import bbe from './libs/big-bang-empire';
+import gameModule from './modules/game/game.module';
 
-bbe.init().catch((error) => console.error(error));
+gameModule.init().catch((error) => console.error(error));
