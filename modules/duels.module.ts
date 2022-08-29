@@ -16,6 +16,7 @@ import bigBangEmpire from '../libs/big-bang-empire';
 import request from '../libs/request';
 
 import characterModule from './character.module';
+import guildModule from './guild.module';
 
 class Opponent {
   avatarImage: string;
@@ -55,6 +56,10 @@ class Opponent {
 
   get battleSkills(): number {
     return Object.keys(this.battleData).length;
+  }
+
+  get isGuildMember(): boolean {
+    return guildModule.isGuildMember(this.id);
   }
 
   constructor(
@@ -250,6 +255,7 @@ class DuelsModule {
     );
     const opponents = opponentsRaw
       .map((opponentRaw) => new Opponent(opponentRaw))
+      .filter((opponent) => !opponent.isGuildMember)
       .sort(
         (opponentA, opponentB) => opponentA.statsTotalWithMissile - opponentB.statsTotalWithMissile,
       );

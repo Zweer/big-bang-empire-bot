@@ -531,6 +531,105 @@ export interface MovieQuestInterface {
   rewards: string;
 }
 
+export interface GuildInterface {
+  id: number;
+  ts_creation: number;
+  initiator_character_id: number;
+  leader_character_id: number;
+  name: string;
+  description: string;
+  note: string;
+  officer_note: string;
+  forum_page: string;
+  premium_currency: number;
+  game_currency: number;
+  status: number;
+  accept_members: true;
+  locale: Locale;
+  pending_guild_battle_attack_id: number;
+  pending_guild_battle_defense_id: number;
+  honor: number;
+  artifact_ids: string;
+  missiles: number;
+  auto_joins: number;
+  battles_fought: number;
+  battles_attacked: number;
+  battles_defended: number;
+  battles_won: number;
+  battles_lost: number;
+  artifacts_won: number;
+  artifacts_lost: number;
+  artifacts_owned_max: number;
+  artifacts_owned_current: number;
+  ts_last_artifact_released: number;
+  missiles_fired: number;
+  auto_joins_used: number;
+  stat_points_available: number;
+  stat_guild_capacity: number;
+  stat_character_base_stats_boost: number;
+  stat_quest_xp_reward_boost: number;
+  stat_quest_game_currency_reward_boost: number;
+  arena_background: number;
+  emblem_background_shape: number;
+  emblem_background_color: number;
+  emblem_background_border_color: number;
+  emblem_icon_shape: number;
+  emblem_icon_color: number;
+  emblem_icon_size: number;
+  studio_room: string;
+  studio_quarter: string;
+  studio_popularity: string;
+  studio_motivation: string;
+  studio_equipment: string;
+  studio_actors_left: string;
+  studio_actors_right: string;
+  studio_free_customizations: string;
+  use_missiles_attack: boolean;
+  use_missiles_defense: boolean;
+  use_auto_joins_attack: boolean;
+  use_auto_joins_defense: boolean;
+  pending_leader_vote_id: number;
+  min_apply_level: number;
+  min_apply_honor: number;
+  apply_open: boolean;
+  apply_open_mail: boolean;
+  movies: number;
+  fans: number;
+  active_quest_booster_id: string;
+  ts_active_quest_boost_expires: number;
+  active_duel_booster_id: string;
+  ts_active_duel_boost_expires: number;
+}
+
+export interface GuildBattleGuildInterface {}
+
+export interface GuildCompetitionDataInterface {}
+
+export interface GuildMemberInterface {
+  id: number;
+  user_id: number;
+  server_id: string;
+  name: string;
+  title: string;
+  gender: string;
+  level: number;
+  honor: number;
+  guild_rank: number;
+  ts_guild_joined: number;
+  ts_last_online: number;
+  last_action: number;
+  online_status: number;
+  game_currency_donation: number;
+  premium_currency_donation: number;
+  guild_competition_points_gathered: number;
+  stat_total_stamina: number;
+  stat_total_strength: number;
+  stat_total_critical_rating: number;
+  stat_total_dodge_rating: number;
+  avatar_image: string;
+  battle_data: string;
+}
+
 export interface GameInterface {
   user: UserInterface;
   character: CharacterInterface;
@@ -614,4 +713,8 @@ export interface GameInterface {
   movies: MovieInterface[];
   movie: MovieInterface;
   movie_quests: MovieQuestInterface[];
+  guild: GuildInterface;
+  guild_battle_guilds: GuildBattleGuildInterface[];
+  guild_competition_data: GuildCompetitionDataInterface[];
+  guild_members: GuildMemberInterface[];
 }
