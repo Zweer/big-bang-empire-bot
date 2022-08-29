@@ -241,8 +241,14 @@ class MovieModule {
         }
 
         await this.startMovieQuest(quest);
+
+        console.log(
+          `  movie completion: ${Math.floor(
+            (this.movieActualEnergy / this.movieNeededEnergy) * 100,
+          )}%`,
+        );
       } else {
-        logger.info(`Not enough movie energy... waiting!`);
+        logger.debug(`Not enough movie energy... waiting!`);
       }
 
       if (
