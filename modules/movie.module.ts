@@ -7,6 +7,15 @@ import bigBangEmpire from '../libs/big-bang-empire';
 import logger from '../libs/log';
 import request from '../libs/request';
 
+enum MovieStatus {
+  Unknown = 0,
+  Created = 1,
+  Started = 7,
+  Finished = 8,
+  TimeUp = 12,
+  Completed = 13,
+}
+
 class Movie {
   id: number;
   characterId: number;
@@ -23,7 +32,7 @@ class Movie {
   coverActorType: number;
   coverFilterType: number;
   cover: string;
-  status: number;
+  status: MovieStatus;
   rating: number;
   fans: number;
   energy: number;
@@ -139,7 +148,9 @@ class MovieQuest {
 
 class MovieModule {
   get hasMovieGoingOn(): boolean {
-    return Boolean(bigBangEmpire.game.movie);
+    return (
+      Boolean(bigBangEmpire.game.movie) && bigBangEmpire.game.movie.status !== MovieStatus.Completed
+    );
   }
 
   get maxMoviesPerDay(): number {
