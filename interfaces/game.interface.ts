@@ -400,7 +400,7 @@ interface ConsumableOffer {
   slot: string;
 }
 
-interface StreamInfo {
+export interface StreamInfoInterface {
   id: number;
   type: string;
   unread: number;
@@ -585,7 +585,7 @@ export interface GameInterface {
   special_offers: { [key: string]: SpecialOffer };
   consumable_offers: { [key: string]: ConsumableOffer };
   missed_duels: number;
-  streams_info: { [key: string]: { [key: string]: StreamInfo } };
+  streams_info: { [key: string]: { [key: string]: StreamInfoInterface } };
   new_guild_log_entries: number;
   ingame_notifications: { [key: string]: IngameNotification };
   tos_update_needed: boolean;

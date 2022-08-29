@@ -7,6 +7,7 @@ import characterModule from '../modules/character.module';
 import datingModule from '../modules/dating.module';
 import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
+import messagesModule from '../modules/messages.module';
 import movieModule from '../modules/movie.module';
 import profileModule from '../modules/profile.module';
 import seasonModule from '../modules/season.module';
@@ -42,6 +43,8 @@ class BigBangEmpire {
       await authModule.sync();
 
       await seasonModule.checkCompletedStep();
+
+      await messagesModule.checkMessages();
 
       await profileModule.checkTutorialFlags();
       await profileModule.checkGoals();
