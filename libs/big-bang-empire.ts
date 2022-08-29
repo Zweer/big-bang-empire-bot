@@ -7,6 +7,7 @@ import characterModule from '../modules/character.module';
 import datingModule from '../modules/dating.module';
 import duelsModule from '../modules/duels.module';
 import friendsModule from '../modules/friends.module';
+import movieModule from '../modules/movie.module';
 import profileModule from '../modules/profile.module';
 import seasonModule from '../modules/season.module';
 import storyModule from '../modules/story.module';
@@ -57,6 +58,9 @@ class BigBangEmpire {
 
       await storyModule.checkForQuestComplete();
       await storyModule.autoQuest();
+
+      await movieModule.checkMovie();
+      await movieModule.checkMovieQuest();
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }

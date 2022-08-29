@@ -480,6 +480,57 @@ export interface SeasonRewardInterface {
   ts_created: number;
 }
 
+export interface MovieInterface {
+  id: number;
+  character_id: number;
+  character_level: number;
+  guild_id: number;
+  set: string;
+  title: string;
+  custom_title: boolean;
+  cover_background_type: number;
+  cover_border_type: number;
+  cover_layout_type: number;
+  cover_layout_new_type: number;
+  cover_font_type: number;
+  cover_actor_type: number;
+  cover_filter_type: number;
+  cover: string;
+  status: number;
+  rating: number;
+  fans: number;
+  energy: number;
+  stat: number;
+  needed_energy: number;
+  duration: number;
+  ts_end: number;
+  movie_quest_id: number;
+  movie_quest_pool: string;
+  claimed_stars: number;
+  rewards_star_1: string;
+  rewards_star_2: string;
+  rewards_star_3: string;
+  votes: number;
+  rank: number;
+}
+
+export interface MovieQuestInterface {
+  id: number;
+  character_id: number;
+  movie_id: number;
+  identifier: string;
+  type: number;
+  stat: number;
+  status: number;
+  ts_complete: number;
+  energy_cost: number;
+  fight_difficulty: number;
+  fight_npc_identifier: string;
+  fight_battle_id: number;
+  won: false;
+  rewards: string;
+}
+
 export interface GameInterface {
   user: UserInterface;
   character: CharacterInterface;
@@ -560,4 +611,7 @@ export interface GameInterface {
   news: News[];
   season_progress: SeasonProgressInterface;
   season_rewards: SeasonRewardInterface[];
+  movies: MovieInterface[];
+  movie: MovieInterface;
+  movie_quests: MovieQuestInterface[];
 }

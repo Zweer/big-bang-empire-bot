@@ -13,6 +13,18 @@ enum QuestStatus {
 }
 
 class Quest {
+  static sort(questA: Quest, questB: Quest) {
+    if (questB.rewardsCount !== questA.rewardsCount) {
+      return questB.rewardsCount - questA.rewardsCount;
+    }
+
+    if (questB.rewards.item !== questA.rewards.item) {
+      return questB.rewards.item - questA.rewards.item;
+    }
+
+    return questB.effectiveness - questA.effectiveness;
+  }
+
   id: number;
   characterId: number;
   identifier: string;
@@ -124,17 +136,7 @@ class StoryModule {
 
     const quests = bigBangEmpire.game.quests
       .map((quest) => new Quest(quest))
-      .sort((questA, questB) => {
-        if (questB.rewardsCount !== questA.rewardsCount) {
-          return questB.rewardsCount - questA.rewardsCount;
-        }
-
-        if (questB.rewards.item !== questA.rewards.item) {
-          return questB.rewards.item - questA.rewards.item;
-        }
-
-        return questB.effectiveness - questA.effectiveness;
-      });
+      .sort((questA, questB) => Quest.sort(questA, questB));
 
     const quest = quests.find((q) => q.energyCost < this.energy);
 
