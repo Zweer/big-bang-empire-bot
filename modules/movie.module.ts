@@ -260,6 +260,7 @@ class MovieModule {
       }
 
       if (this.movieActualEnergy === this.movieNeededEnergy) {
+        logger.info(`Finishing movie...`);
         await this.finishMovie();
       }
     }
