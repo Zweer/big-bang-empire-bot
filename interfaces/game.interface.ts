@@ -630,6 +630,13 @@ export interface GuildMemberInterface {
   battle_data: string;
 }
 
+export interface UserVoucherInterface {
+  id: number;
+  code: string;
+  rewards: string;
+  ts_end: number;
+}
+
 export interface GameInterface {
   user: UserInterface;
   character: CharacterInterface;
@@ -717,4 +724,5 @@ export interface GameInterface {
   guild_battle_guilds: GuildBattleGuildInterface[];
   guild_competition_data: GuildCompetitionDataInterface[];
   guild_members: GuildMemberInterface[];
+  user_vouchers: UserVoucherInterface[];
 }
