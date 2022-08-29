@@ -157,6 +157,41 @@ class MovieModule {
     return bigBangEmpire.game.character.movie_energy;
   }
 
+  get movieNeededEnergy(): number {
+    return bigBangEmpire.game.movie.needed_energy;
+  }
+
+  getMovieNeededEnergyStar(starIndex: number): number {
+    const movieRating = environment.game.constants.movie_ratings.find(
+      (movieRating) => movieRating.stars === starIndex,
+    );
+    if (!movieRating) {
+      throw new Error(`Invalid movie star ${starIndex}`);
+    }
+
+    return (this.movieNeededEnergy / 100) * movieRating?.needed_progress;
+  }
+
+  get movieNeededEnergy1Star(): number {
+    return this.getMovieNeededEnergyStar(1);
+  }
+
+  get movieNeededEnergy2Star(): number {
+    return this.getMovieNeededEnergyStar(2);
+  }
+
+  get movieNeededEnergy3Star(): number {
+    return this.getMovieNeededEnergyStar(3);
+  }
+
+  get movieActualEnergy(): number {
+    return bigBangEmpire.game.movie.energy;
+  }
+
+  get movieStarsClaimed(): number {
+    return bigBangEmpire.game.movie.claimed_stars;
+  }
+
   async checkMovie(): Promise<void> {
     if (
       !this.hasMovieGoingOn &&
@@ -205,7 +240,21 @@ class MovieModule {
         }
 
         await this.startMovieQuest(quest);
+      } else {
+        console.log(`Not enough movie energy... waiting!`);
       }
+    }
+
+    if (
+      (this.movieActualEnergy > this.movieNeededEnergy1Star && this.movieStarsClaimed < 1) ||
+      (this.movieActualEnergy > this.movieNeededEnergy2Star && this.movieStarsClaimed < 2) ||
+      (this.movieActualEnergy > this.movieNeededEnergy3Star && this.movieStarsClaimed < 3)
+    ) {
+      await this.claimMovieStar();
+    }
+
+    if (this.movieActualEnergy === this.movieNeededEnergy) {
+      await this.finishMovie();
     }
   }
 
