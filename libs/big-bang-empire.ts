@@ -13,6 +13,8 @@ import profileModule from '../modules/profile.module';
 import seasonModule from '../modules/season.module';
 import storyModule from '../modules/story.module';
 
+import './telegram';
+
 class BigBangEmpire {
   get userId(): string {
     return this.game.user?.id.toString() ?? '0';
