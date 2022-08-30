@@ -1,4 +1,5 @@
 import pluralize from 'pluralize';
+import numbro from 'numbro';
 
 import environment from '../../configs/environment';
 import bigBangEmpire from '../game/game.module';
@@ -9,7 +10,6 @@ import { MovieStatus } from './types';
 import { MovieModel } from './models/movie.model';
 import { MovieQuestModel } from './models/movieQuest.model';
 import movieService from './movie.service';
-import numbro from 'numbro';
 
 class MovieModule {
   get hasMovieGoingOn(): boolean {
