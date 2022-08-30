@@ -1,5 +1,7 @@
-import bigBangEmpire from '../game/game.module';
+import gameModule from '../game/game.module';
 import logger from '../../libs/log';
+import environment from '../../configs/environment';
+import characterModule from '../character/character.module';
 
 import { Inventory } from './models/inventory.model';
 import inventoryService from './inventory.service';
@@ -8,7 +10,7 @@ import { ItemType } from './types';
 
 class InventoryModule {
   get inventory(): Inventory {
-    return new Inventory(bigBangEmpire.game.inventory, bigBangEmpire.game.items);
+    return new Inventory(gameModule.game.inventory, gameModule.game.items);
   }
 
   async improveInventory(): Promise<void> {
@@ -80,10 +82,56 @@ class InventoryModule {
     await this.refreshShop();
   }
 
+  async checkShopForCollections(): Promise<void> {
+    const inventory = this.inventory;
+
+    await inventory.shopItems.reduce(async (promise, item) => {
+      await promise;
+
+      const identifier = item.identifier;
+      const template = environment.game.constants.item_templates[identifier];
+      const pattern = template.item_pattern;
+      const currentPattern = gameModule.game.current_item_pattern_values[pattern];
+
+      if (currentPattern && !currentPattern.collected_items.includes(identifier)) {
+        logger.info(`Found an item you don't have`);
+        await this.buyShopItem(item);
+      }
+    }, Promise.resolve());
+  }
+
+  async checkPatternRewards(): Promise<void> {
+    await Object.entries(gameModule.game.current_item_pattern_values).reduce(
+      async (promise, [name, currentPattern]) => {
+        await promise;
+
+        const pattern = environment.game.constants.item_pattern[name];
+        const collectedPatterns = gameModule.game.collected_item_pattern.filter(
+          (collectedPattern) => collectedPattern[name],
+        );
+        const maxCollectedPattern = collectedPatterns.reduce(
+          (max, collectedPattern) =>
+            max > collectedPattern[name].value ? max : collectedPattern[name].value,
+          0,
+        );
+        const patternStepToCollect = Object.keys(pattern.values).find(
+          (value) =>
+            parseInt(value, 10) > maxCollectedPattern &&
+            currentPattern.collected_items.length > parseInt(value, 10),
+        );
+
+        if (patternStepToCollect) {
+          console.log(`TODO`);
+        }
+      },
+      Promise.resolve(),
+    );
+  }
+
   async buyShopItem(item: ItemModel, usePremium = false): Promise<boolean> {
     if (
-      (!item.premiumItem && item.buyPrice < bigBangEmpire.game.character.game_currency) ||
-      (item.premiumItem && item.buyPrice < bigBangEmpire.game.user.premium_currency && usePremium)
+      (!item.premiumItem && item.buyPrice < gameModule.game.character.game_currency) ||
+      (item.premiumItem && item.buyPrice < gameModule.game.user.premium_currency && usePremium)
     ) {
       await inventoryService.buyShopItem(item);
 
@@ -95,8 +143,7 @@ class InventoryModule {
 
   async refreshShop(): Promise<void> {
     if (
-      bigBangEmpire.game.character.max_free_shop_refreshes >
-      bigBangEmpire.game.character.shop_refreshes
+      gameModule.game.character.max_free_shop_refreshes > gameModule.game.character.shop_refreshes
     ) {
       logger.info(`Refreshing shop`);
       await inventoryService.refreshShopItems();

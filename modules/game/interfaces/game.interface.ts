@@ -82,7 +82,7 @@ interface CollectedGoal {
 
 interface ItemPatternValue {
   value: number;
-  collected_items: [];
+  collected_items: string[];
   is_new: boolean;
 }
 
@@ -321,9 +321,9 @@ export interface GameInterface {
   current_goal_values: { [key: string]: Goal };
   collected_goals: CollectedGoal[];
   current_item_pattern_values: { [key: string]: ItemPatternValue };
-  collected_item_pattern: [];
+  collected_item_pattern: CollectedGoal[];
   current_optical_changes: CurrentOpticalChangesInterface;
-  collected_optical_changes: [];
+  collected_optical_changes: CollectedGoal[];
   titles: [];
   special_offers: { [key: string]: SpecialOffer };
   consumable_offers: { [key: string]: ConsumableOffer };

@@ -60,6 +60,7 @@ class GameModule {
       await characterModule.checkStats();
       await characterModule.checkOpticalChanges();
       await inventoryModule.improveInventory();
+      await inventoryModule.checkShopForCollections();
 
       await duelsModule.checkMissedDuels();
       await duelsModule.autoDuel();
