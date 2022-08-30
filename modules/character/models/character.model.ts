@@ -161,7 +161,7 @@ export class CharacterModel {
   tsLastWorkCollection: Date;
   tutorialFlags: string;
   unreadMassSystemMessages: number;
-  unusedResources: string;
+  unusedResources: { [key: string]: number };
   usedResources: string;
   userId: number;
   userStoryActivated: boolean;
@@ -207,6 +207,10 @@ export class CharacterModel {
     const diffNext = nextLvlXp - lvlXp;
 
     return diff / diffNext;
+  }
+
+  get slotmachineJeton(): number {
+    return this.unusedResources['3'];
   }
 
   constructor(character: CharacterInterface) {
@@ -371,7 +375,7 @@ export class CharacterModel {
     this.tsLastWorkCollection = new Date(character.ts_last_work_collection * 1000);
     this.tutorialFlags = character.tutorial_flags;
     this.unreadMassSystemMessages = character.unread_mass_system_messages;
-    this.unusedResources = character.unused_resources;
+    this.unusedResources = character.unused_resources && JSON.parse(character.unused_resources);
     this.usedResources = character.used_resources;
     this.userId = character.user_id;
     this.userStoryActivated = character.user_story_activated;

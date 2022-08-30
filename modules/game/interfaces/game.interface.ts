@@ -372,4 +372,9 @@ export interface GameInterface {
   private_conversations: PrivateConversationInterface[];
   centered_rank: number;
   max_characters: number;
+  reward: string;
+  slotmachine_reward_quality: number;
+  slotmachine_slot1: number;
+  slotmachine_slot2: number;
+  slotmachine_slot3: number;
 }

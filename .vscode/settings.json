@@ -12,6 +12,7 @@
         "season",
         "story",
         "telegram",
-        "inventory"
+        "inventory",
+        "slotmachine"
     ]
 }

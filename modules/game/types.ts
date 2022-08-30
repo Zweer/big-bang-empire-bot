@@ -35,3 +35,9 @@ export type Locale =
   | 'en_WO';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
+export enum RewardQuality {
+  Common = 1,
+  Rare = 2,
+  Epic = 3,
+}

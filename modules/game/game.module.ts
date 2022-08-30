@@ -11,6 +11,7 @@ import messagesModule from '../messages/messages.module';
 import movieModule from '../movie/movie.module';
 import profileModule from '../profile/profile.module';
 import seasonModule from '../season/season.module';
+import slotmachineModule from '../slotmachine/slotmachine.module';
 import storyModule from '../story/story.module';
 
 import { GameInterface } from './interfaces/game.interface';
@@ -70,6 +71,8 @@ class GameModule {
 
       await movieModule.checkMovie();
       await movieModule.checkMovieQuest();
+
+      await slotmachineModule.checkAvailableSpin();
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
