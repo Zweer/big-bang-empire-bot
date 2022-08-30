@@ -5,10 +5,19 @@ import characterModule from '../character/character.module';
 import { QuestStatus } from './types';
 import { QuestModel } from './models/quest.model';
 import storyService from './story.service';
+import { QuestInterface } from './interfaces/quest.interface';
 
 class StoryModule {
   get quest(): QuestModel {
-    return gameModule.game.quest && new QuestModel(gameModule.game.quest);
+    return (
+      (gameModule.game.quest && new QuestModel(gameModule.game.quest)) ||
+      (characterModule.character.activeQuestId &&
+        new QuestModel(
+          gameModule.game.quests.find(
+            (quest) => quest.id === characterModule.character.activeQuestId,
+          ) as QuestInterface,
+        ))
+    );
   }
 
   get hasEnergy(): boolean {

@@ -1,3 +1,4 @@
+import environment from '../../../configs/environment';
 import { Gender, Locale } from '../../game/types';
 import { CharacterInterface } from '../interfaces/character.interface';
 import { StatType } from '../types';
@@ -192,6 +193,20 @@ export class CharacterModel {
 
   get canDuel(): boolean {
     return this.duelStamina >= this.duelStaminaCost;
+  }
+
+  get levelPercentage(): number {
+    const lvl = this.level;
+    const nextLvl = lvl + 1;
+
+    const xp = this.xp;
+    const lvlXp = environment.game.constants.levels[lvl].xp;
+    const nextLvlXp = environment.game.constants.levels[nextLvl].xp;
+
+    const diff = xp - lvlXp;
+    const diffNext = nextLvlXp - lvlXp;
+
+    return diff / diffNext;
   }
 
   constructor(character: CharacterInterface) {

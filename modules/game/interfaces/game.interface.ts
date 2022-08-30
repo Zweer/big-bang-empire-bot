@@ -13,33 +13,10 @@ import { StreamInfoInterface } from '../../messages/interfaces/streamInfo.interf
 import { UserVoucherInterface } from '../../messages/interfaces/userVoucher.interface';
 import { MovieInterface } from '../../movie/interfaces/movie.interface';
 import { MovieQuestInterface } from '../../movie/interfaces/movieQuest.interface';
+import { UserInterface } from '../../profile/interfaces/user.interface';
 import { SeasonRewardInterface } from '../../season/interfaces/seasonReward.interface';
 import { QuestInterface } from '../../story/interfaces/quest.interface';
 import { Locale } from '../types';
-
-export interface UserInterface {
-  id: number;
-  registration_source: string;
-  ref: string;
-  subid: string;
-  ts_creation: number;
-  network: string;
-  app_version: string;
-  app_version_registration: string;
-  device_type: number;
-  confirmed: boolean;
-  email: string;
-  login_count: number;
-  session_id: string;
-  locale: Locale;
-  premium_currency: number;
-  geo_country_code: string;
-  settings: string;
-  status: number;
-  trusted: boolean;
-  ts_tos_accepted: number;
-  ts_pp_accepted: number;
-}
 
 interface BankInventory {
   id: number;
@@ -392,4 +369,6 @@ export interface GameInterface {
   duel: DuelInterface;
   private_conversation_messages: PrivateConversationMessageInterface[];
   private_conversations: PrivateConversationInterface[];
+  centered_rank: number;
+  max_characters: number;
 }

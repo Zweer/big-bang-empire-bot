@@ -1,30 +1,36 @@
 import pluralize from 'pluralize';
 
 import environmentConfig from '../../configs/environment';
-import bigBangEmpire from '../game/game.module';
 import logger from '../../libs/log';
+import gameModule from '../game/game.module';
 
+import { UserModel } from './models/user.model';
 import profileService from './profile.service';
+import { LeaderboardSortType } from './types';
 
 class ProfileModule {
   get hasBoosterForQuests(): boolean {
-    return bigBangEmpire.game.character.active_quest_booster_id !== '';
+    return gameModule.game.character.active_quest_booster_id !== '';
   }
 
   get hasBoosterForStats(): boolean {
-    return bigBangEmpire.game.character.active_stats_booster_id !== '';
+    return gameModule.game.character.active_stats_booster_id !== '';
   }
 
   get hasBoosterForWork(): boolean {
-    return bigBangEmpire.game.character.active_work_booster_id !== '';
+    return gameModule.game.character.active_work_booster_id !== '';
   }
 
   async checkTutorialFlags(): Promise<void> {
     // no ideas
   }
 
+  get user(): UserModel {
+    return new UserModel(gameModule.game.user);
+  }
+
   async checkGoals(): Promise<void> {
-    const currentGoals = Object.entries(bigBangEmpire.game.current_goal_values)
+    const currentGoals = Object.entries(gameModule.game.current_goal_values)
       .filter(([, { value, current_value }]) => value === current_value && value > 0)
       .map(([name, { value }]) => {
         const goal = environmentConfig.game.constants.goals[name];
@@ -37,7 +43,7 @@ class ProfileModule {
             0,
           );
 
-        const collected = bigBangEmpire.game.collected_goals
+        const collected = gameModule.game.collected_goals
           .filter((collectedGoal) => collectedGoal[name])
           .map((collectedGoal) => collectedGoal[name]);
 
@@ -90,6 +96,15 @@ class ProfileModule {
     if (!this.hasBoosterForWork) {
       await profileService.buyBooster('booster_work2');
     }
+  }
+
+  async getLeaderboard(sortType: LeaderboardSortType): Promise<{ rank: number; total: number }> {
+    await profileService.retrieveLeaderboard(sortType);
+
+    return {
+      rank: gameModule.game.centered_rank,
+      total: gameModule.game.max_characters,
+    };
   }
 }
 

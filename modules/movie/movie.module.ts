@@ -18,6 +18,10 @@ class MovieModule {
     );
   }
 
+  get movie(): MovieModel {
+    return new MovieModel(bigBangEmpire.game.movie);
+  }
+
   get maxMoviesPerDay(): number {
     return environment.game.constants.movie_daily_limit;
   }

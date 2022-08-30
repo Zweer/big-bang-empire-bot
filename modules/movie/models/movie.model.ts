@@ -35,6 +35,10 @@ export class MovieModel {
   votes: number;
   rank: number;
 
+  get completionPercentage(): number {
+    return this.energy / this.neededEnergy;
+  }
+
   constructor(movie: MovieInterface) {
     this.id = movie.id;
     this.characterId = movie.character_id;

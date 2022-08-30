@@ -26,7 +26,7 @@ export class QuestModel {
   durationType: number;
   durationRaw: number;
   duration: number;
-  tsComplete: number;
+  tsComplete: Date;
   energyCost: number;
   fightDifficulty: number;
   fightNpcIdentifier: string;
@@ -50,6 +50,10 @@ export class QuestModel {
     return this.rewards.xp / this.energyCost;
   }
 
+  get eta(): number {
+    return this.tsComplete.getTime() - new Date().getTime();
+  }
+
   constructor(quest: QuestInterface) {
     this.id = quest.id;
     this.characterId = quest.character_id;
@@ -62,7 +66,7 @@ export class QuestModel {
     this.durationType = quest.duration_type;
     this.durationRaw = quest.duration_raw;
     this.duration = quest.duration;
-    this.tsComplete = quest.ts_complete;
+    this.tsComplete = new Date(quest.ts_complete * 1000);
     this.energyCost = quest.energy_cost;
     this.fightDifficulty = quest.fight_difficulty;
     this.fightNpcIdentifier = quest.fight_npc_identifier;
