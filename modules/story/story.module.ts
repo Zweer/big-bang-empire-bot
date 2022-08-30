@@ -25,7 +25,7 @@ class StoryModule {
   }
 
   get anotherQuestInProgress(): boolean {
-    return characterModule.character.activeQuestId > 0;
+    return (characterModule.character.activeQuestId > 0 && !this.quest) || this.quest.isInProgress;
   }
 
   async checkForQuestComplete(): Promise<void> {
@@ -35,22 +35,20 @@ class StoryModule {
 
     const quest = this.quest;
 
-    if (!this.quest) {
+    if (quest.isInProgress) {
       return;
     }
 
     try {
       await storyService.checkForQuestComplete();
 
-      if (quest) {
-        if (quest.status === QuestStatus.Finished) {
-          await storyService.claimQuestRewards();
-        }
+      if (quest.status === QuestStatus.Finished) {
+        await storyService.claimQuestRewards();
       }
     } catch (err) {
       const error = err as Error;
-      if (!/errFinishNotYetCompleted/.exec(error.message)) {
-        throw new Error(error.message);
+      if (!/errFinishInvalidStatus/.exec(error.message)) {
+        await storyService.claimQuestRewards();
       }
     }
   }

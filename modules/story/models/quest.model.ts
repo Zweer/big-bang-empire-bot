@@ -54,6 +54,10 @@ export class QuestModel {
     return this.tsComplete.getTime() - new Date().getTime();
   }
 
+  get isInProgress(): boolean {
+    return this.tsComplete > new Date();
+  }
+
   constructor(quest: QuestInterface) {
     this.id = quest.id;
     this.characterId = quest.character_id;
