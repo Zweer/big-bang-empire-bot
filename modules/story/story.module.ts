@@ -81,6 +81,17 @@ class StoryModule {
       await storyService.startQuest(quest);
     }
   }
+
+  async handleBuyEnergy() {
+    const character = characterModule.character;
+    if (
+      character.questEnergyRefillAmountToday < 200 &&
+      character.questEnergy + 50 < character.maxQuestEnergy
+    ) {
+      console.log(`Buying more energy`);
+      await storyService.buyQuestEnergy();
+    }
+  }
 }
 
 export default new StoryModule();

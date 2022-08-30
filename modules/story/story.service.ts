@@ -21,6 +21,12 @@ class StoryService {
       quest_id: quest.id.toString(),
     });
   }
+
+  async buyQuestEnergy(usePremium = false): Promise<void> {
+    await request.post('buyQuestEnergy', {
+      use_premium: usePremium ? 'true' : 'false',
+    });
+  }
 }
 
 export default new StoryService();
