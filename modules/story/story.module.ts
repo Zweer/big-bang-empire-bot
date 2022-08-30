@@ -8,7 +8,7 @@ import storyService from './story.service';
 
 class StoryModule {
   get quest(): QuestModel {
-    return new QuestModel(gameModule.game.quest);
+    return gameModule.game.quest && new QuestModel(gameModule.game.quest);
   }
 
   get hasEnergy(): boolean {
@@ -24,10 +24,15 @@ class StoryModule {
       return;
     }
 
+    const quest = this.quest;
+
+    if (!this.quest) {
+      return;
+    }
+
     try {
       await storyService.checkForQuestComplete();
 
-      const quest = this.quest;
       if (quest) {
         if (quest.status === QuestStatus.Finished) {
           await storyService.claimQuestRewards();
