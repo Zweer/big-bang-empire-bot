@@ -9,6 +9,7 @@ import { MovieStatus } from './types';
 import { MovieModel } from './models/movie.model';
 import { MovieQuestModel } from './models/movieQuest.model';
 import movieService from './movie.service';
+import numbro from 'numbro';
 
 class MovieModule {
   get hasMovieGoingOn(): boolean {
@@ -92,14 +93,16 @@ class MovieModule {
       const quest = quests.find((quest) => quest.energyCost < character.movieEnergy);
 
       if (quest) {
-        logger.info(`Starting a movie quest`);
+        logger.info(
+          `Starting a movie quest: ${numbro(quest.energyCost).format({ forceSign: true })} energy`,
+        );
         if (quest.rewards.item) {
           logger.info(`  with an item!`);
         }
 
         await movieService.startMovieQuest(quest);
 
-        console.log(
+        logger.info(
           `  movie completion: ${Math.floor(
             (this.movieActualEnergy / this.movieNeededEnergy) * 100,
           )}%`,
