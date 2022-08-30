@@ -6,8 +6,26 @@ import logger from '../../libs/log';
 import messagesService from './messages.service';
 import { StreamInfoInterface } from './interfaces/streamInfo.interface';
 import { UserVoucherModel } from './models/userVoucher.model';
+import { PrivateMessageModel } from './models/privateMessage.model';
+import { PrivateConversationModel } from './models/privateConversation.model';
 
 class MessagesModule {
+  get vouchers(): UserVoucherModel[] {
+    return bigBangEmpire.game.user_vouchers.map((voucher) => new UserVoucherModel(voucher));
+  }
+
+  get privateMessages(): PrivateMessageModel[] {
+    return bigBangEmpire.game.private_conversation_messages.map(
+      (message) => new PrivateMessageModel(message),
+    );
+  }
+
+  get privateConversations(): PrivateConversationModel[] {
+    return bigBangEmpire.game.private_conversations.map(
+      (conversation) => new PrivateConversationModel(conversation),
+    );
+  }
+
   async checkMessages() {
     const streams = Object.values(bigBangEmpire.game.streams_info)
       .map((streams) => Object.values(streams))
@@ -39,6 +57,12 @@ class MessagesModule {
           await this.handleVoucherStream(stream);
           break;
 
+        case 'p':
+          await messagesService.getStreams(stream.type);
+          await messagesService.getStreamMessages(stream);
+          await this.handlePrivateStream(stream);
+          break;
+
         default:
           // do nothing
           break;
@@ -47,9 +71,7 @@ class MessagesModule {
   }
 
   async handleVoucherStream(stream: StreamInfoInterface): Promise<void> {
-    const vouchers = bigBangEmpire.game.user_vouchers.map(
-      (voucher) => new UserVoucherModel(voucher),
-    );
+    const vouchers = this.vouchers;
 
     logger.info(`You have ${pluralize('voucher', vouchers.length, true)}`);
 
@@ -60,6 +82,22 @@ class MessagesModule {
       await messagesService.redeemVoucher(voucher);
       logger.info(`  redeemed`);
     }, Promise.resolve());
+  }
+
+  async handlePrivateStream(stream: StreamInfoInterface): Promise<void> {
+    const conversation = this.privateConversations.find(
+      (conversation) => conversation.id === stream.id,
+    );
+    const messages = this.privateMessages;
+
+    logger.info(`Private message!`);
+    messages.forEach((message) =>
+      logger.info(
+        `  ${conversation?.members.find(
+          (member) => member.id === message.characterFromId,
+        )} writes: ${message.message}`,
+      ),
+    );
   }
 }
 

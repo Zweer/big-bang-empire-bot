@@ -7,6 +7,8 @@ import { MissedDuelInterface } from '../../duels/interfaces/missedDuels.interfac
 import { OpponentInterface } from '../../duels/interfaces/opponent.interface';
 import { InventoryInterface } from '../../inventory/interfaces/inventory.interface';
 import { ItemInterface } from '../../inventory/interfaces/item.interface';
+import { PrivateConversationInterface } from '../../messages/interfaces/privateConversation.interface';
+import { PrivateConversationMessageInterface } from '../../messages/interfaces/privateConversationMessage.interface';
 import { StreamInfoInterface } from '../../messages/interfaces/streamInfo.interface';
 import { UserVoucherInterface } from '../../messages/interfaces/userVoucher.interface';
 import { MovieInterface } from '../../movie/interfaces/movie.interface';
@@ -388,4 +390,6 @@ export interface GameInterface {
   opponents: OpponentInterface[];
   battle: BattleInterface;
   duel: DuelInterface;
+  private_conversation_messages: PrivateConversationMessageInterface[];
+  private_conversations: PrivateConversationInterface[];
 }
