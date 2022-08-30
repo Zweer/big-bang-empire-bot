@@ -65,6 +65,10 @@ class MovieModule {
     return bigBangEmpire.game.movie.claimed_stars;
   }
 
+  get moviesToVote(): MovieModel[] {
+    return bigBangEmpire.game.movies_to_vote.map((movie) => new MovieModel(movie));
+  }
+
   async checkMovie(): Promise<void> {
     if (
       !this.hasMovieGoingOn &&
@@ -127,6 +131,16 @@ class MovieModule {
         logger.info(`Finishing movie...`);
         await movieService.finishMovie();
       }
+    }
+  }
+
+  async checkMovieVotes() {
+    if (characterModule.character.movieVotes > 0) {
+      await movieService.getMoviesToVote();
+
+      const movie = this.moviesToVote[0];
+
+      await movieService.voteForMovie(movie);
     }
   }
 }

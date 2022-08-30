@@ -356,6 +356,7 @@ export interface GameInterface {
   season_rewards: SeasonRewardInterface[];
   movies: MovieInterface[];
   movie: MovieInterface;
+  movies_to_vote: MovieInterface[];
   movie_quests: MovieQuestInterface[];
   guild: GuildInterface;
   guild_battle_guilds: GuildBattleGuildInterface[];

@@ -37,6 +37,19 @@ class MovieService {
   async finishMovie() {
     await request.post('finishMovie');
   }
+
+  async getMoviesToVote(refresh = false): Promise<void> {
+    await request.post('getMoviesToVote', {
+      refresh: refresh ? 'true' : 'false',
+    });
+  }
+
+  async voteForMovie(movie: MovieModel): Promise<void> {
+    await request.post('voteForMovie', {
+      discard_item: 'false',
+      movie_id: movie.id.toString(),
+    });
+  }
 }
 
 export default new MovieService();
