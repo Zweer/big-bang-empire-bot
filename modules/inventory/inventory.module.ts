@@ -77,6 +77,7 @@ class InventoryModule {
 
     await inventory.bagItems.reduce(checkItem(false), Promise.resolve());
     await inventory.shopItems.reduce(checkItem(true), Promise.resolve());
+    await this.refreshShop();
   }
 
   async buyShopItem(item: ItemModel, usePremium = false): Promise<boolean> {
@@ -97,6 +98,7 @@ class InventoryModule {
       bigBangEmpire.game.character.max_free_shop_refreshes >
       bigBangEmpire.game.character.shop_refreshes
     ) {
+      logger.info(`Refreshing shop`);
       await inventoryService.refreshShopItems();
     }
   }
