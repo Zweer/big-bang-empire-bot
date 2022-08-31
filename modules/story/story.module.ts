@@ -36,12 +36,14 @@ class StoryModule {
     }
 
     if (quest.status === QuestStatus.Started && quest.tsComplete < new Date()) {
+      logger.info(`Completing the quest`);
       await storyService.checkForQuestComplete();
     }
 
     quest = this.quest;
 
     if (quest.status === QuestStatus.Finished) {
+      logger.info(`Claiming quest rewards`);
       await storyService.claimQuestRewards();
     }
   }
