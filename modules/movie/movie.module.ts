@@ -19,7 +19,7 @@ class MovieModule {
   }
 
   get movie(): MovieModel {
-    return new MovieModel(bigBangEmpire.game.movie);
+    return bigBangEmpire.game.movie && new MovieModel(bigBangEmpire.game.movie);
   }
 
   get maxMoviesPerDay(): number {
@@ -72,7 +72,7 @@ class MovieModule {
   async checkMovie(): Promise<void> {
     if (
       !this.hasMovieGoingOn &&
-      this.maxMoviesPerDay > this.moviesStartedToday &&
+      this.maxMoviesPerDay >= this.moviesStartedToday &&
       characterModule.character.tsLastMovieFinished.getTime() + 60 * 60 * 1000 <
         new Date().getTime()
     ) {
