@@ -78,9 +78,7 @@ Commands are:
       msg.push(`------------`);
       msg.push(
         `- energy: ${character.questEnergy} + ${200 - character.questEnergyRefillAmountToday} (${
-          storyModule.anotherQuestInProgress
-            ? numbro(storyModule.quest.eta / 1000).formatTime()
-            : '-'
+          storyModule.quest ? numbro(storyModule.quest.eta / 1000).formatTime() : '-'
         })`,
       );
       msg.push(

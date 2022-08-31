@@ -63,6 +63,6 @@ export class QuestModel {
     this.fightNpcIdentifier = quest.fight_npc_identifier;
     this.fightBattleId = quest.fight_battle_id;
     this.won = quest.won;
-    this.rewards = new RewardModel(JSON.parse(quest.rewards));
+    this.rewards = new RewardModel(JSON.parse(quest.rewards ?? '{}'));
   }
 }

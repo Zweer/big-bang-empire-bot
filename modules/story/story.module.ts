@@ -35,7 +35,7 @@ class StoryModule {
       return;
     }
 
-    if (quest.status === QuestStatus.Started && quest.tsComplete > new Date()) {
+    if (quest.status === QuestStatus.Started && quest.tsComplete < new Date()) {
       await storyService.checkForQuestComplete();
     }
 
