@@ -13,6 +13,7 @@
         "story",
         "telegram",
         "inventory",
-        "slotmachine"
+        "slotmachine",
+        "dungeon"
     ]
 }
