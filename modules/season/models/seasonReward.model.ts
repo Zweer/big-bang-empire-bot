@@ -1,4 +1,4 @@
-import { RewardInterface } from '../../game/interfaces/reward.interface';
+import { RewardInterface } from '../../common/interfaces/reward.interface';
 import { SeasonRewardInterface } from '../interfaces/seasonReward.interface';
 import { SeasonRewardStatus } from '../types';
 

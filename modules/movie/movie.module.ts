@@ -98,11 +98,13 @@ class MovieModule {
       const quests = bigBangEmpire.game.movie_quests
         .map((quest) => new MovieQuestModel(quest))
         .sort((questA, questB) => MovieQuestModel.sort(questA, questB));
-      const quest = quests.find((quest) => quest.energyCost < character.movieEnergy);
+      const quest = quests[0];
 
-      if (quest) {
+      if (quest.energyCost < character.movieEnergy) {
         logger.info(
-          `Starting a movie quest: ${numbro(quest.energyCost).format({ forceSign: true })} energy`,
+          `Starting a movie quest: ${numbro(quest.rewards.movieProgress).format({
+            forceSign: true,
+          })} progress`,
         );
         if (quest.rewards.item) {
           logger.info(`  with an item!`);
@@ -113,7 +115,7 @@ class MovieModule {
         logger.info(
           `  movie completion: ${Math.floor(
             (this.movieActualEnergy / this.movieNeededEnergy) * 100,
-          )}%`,
+          )}% (${this.movieActualEnergy} / ${this.movieNeededEnergy})`,
         );
       } else {
         logger.debug(`Not enough movie energy... waiting!`);

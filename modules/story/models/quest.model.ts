@@ -1,15 +1,14 @@
-import { RewardInterface } from '../../game/interfaces/reward.interface';
+import { RewardModel } from '../../common/models/reward.model';
 import { QuestInterface } from '../interfaces/quest.interface';
 import { QuestStatus } from '../types';
 
 export class QuestModel {
   static sort(questA: QuestModel, questB: QuestModel) {
-    if (questB.rewardsCount !== questA.rewardsCount) {
-      return questB.rewardsCount - questA.rewardsCount;
+    if (questB.rewards.priority !== questA.rewards.priority) {
+      return questB.rewards.priority - questA.rewards.priority;
     }
-
-    if (questB.rewards.item !== questA.rewards.item) {
-      return questB.rewards.item - questA.rewards.item;
+    if (questB.rewards.super.length !== questA.rewards.super.length) {
+      return questB.rewards.super.length - questA.rewards.super.length;
     }
 
     return questB.effectiveness - questA.effectiveness;
@@ -32,19 +31,7 @@ export class QuestModel {
   fightNpcIdentifier: string;
   fightBattleId: number;
   won: boolean;
-  rewards: RewardInterface;
-
-  get rewardsCount(): number {
-    return Object.keys(this.rewards).filter((reward) => reward !== 'movie_votes').length;
-  }
-
-  get superRewards(): { [key: string]: number } {
-    return Object.fromEntries(
-      Object.entries(this.rewards).filter(
-        ([key]) => !['coins', 'honor', 'item', 'premium', 'statPoints', 'xp'].includes(key),
-      ),
-    );
-  }
+  rewards: RewardModel;
 
   get effectiveness(): number {
     return this.rewards.xp / this.energyCost;
@@ -76,6 +63,6 @@ export class QuestModel {
     this.fightNpcIdentifier = quest.fight_npc_identifier;
     this.fightBattleId = quest.fight_battle_id;
     this.won = quest.won;
-    this.rewards = quest.rewards && JSON.parse(quest.rewards);
+    this.rewards = new RewardModel(JSON.parse(quest.rewards));
   }
 }

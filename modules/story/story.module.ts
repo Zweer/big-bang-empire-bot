@@ -20,36 +20,29 @@ class StoryModule {
     );
   }
 
+  get quests(): QuestModel[] {
+    return gameModule.game.quests.map((quest) => new QuestModel(quest));
+  }
+
   get hasEnergy(): boolean {
     return characterModule.character.questEnergy > 2;
   }
 
-  get anotherQuestInProgress(): boolean {
-    return (characterModule.character.activeQuestId > 0 && !this.quest) || this.quest.isInProgress;
-  }
-
   async checkForQuestComplete(): Promise<void> {
-    if (!this.anotherQuestInProgress) {
+    let quest = this.quest;
+
+    if (!quest) {
       return;
     }
 
-    const quest = this.quest;
-
-    if (quest.isInProgress) {
-      return;
-    }
-
-    try {
+    if (quest.status === QuestStatus.Started && quest.tsComplete > new Date()) {
       await storyService.checkForQuestComplete();
+    }
 
-      if (quest.status === QuestStatus.Finished) {
-        await storyService.claimQuestRewards();
-      }
-    } catch (err) {
-      const error = err as Error;
-      if (!/errFinishInvalidStatus/.exec(error.message)) {
-        await storyService.claimQuestRewards();
-      }
+    quest = this.quest;
+
+    if (quest.status === QuestStatus.Finished) {
+      await storyService.claimQuestRewards();
     }
   }
 
@@ -59,14 +52,14 @@ class StoryModule {
       return;
     }
 
-    if (this.anotherQuestInProgress) {
+    const currentQuest = this.quest;
+
+    if (currentQuest && currentQuest.status !== QuestStatus.RewardsProcessed) {
       logger.debug(`Another quest in progress`);
       return;
     }
 
-    const quests = gameModule.game.quests
-      .map((quest) => new QuestModel(quest))
-      .sort((questA, questB) => QuestModel.sort(questA, questB));
+    const quests = this.quests.sort((questA, questB) => QuestModel.sort(questA, questB));
 
     const quest = quests.find((q) => q.energyCost < characterModule.character.questEnergy);
 
@@ -74,7 +67,7 @@ class StoryModule {
       logger.info(`Starting a new quest:`);
       logger.info(`  - ${quest.energyCost} energy`);
       logger.info(`  - ${Math.round(quest.effectiveness)} xp/energy`);
-      Object.keys(quest.superRewards).forEach((reward) => logger.info(`  - with a ${reward}`));
+      quest.rewards.super.forEach((reward) => logger.info(`  - with a ${reward}`));
 
       await storyService.startQuest(quest);
     }

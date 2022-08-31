@@ -4,7 +4,7 @@ import environment from '../../configs/environment';
 import logger from '../../libs/log';
 import characterModule from '../character/character.module';
 import gameModule from '../game/game.module';
-import { RewardInterface } from '../game/interfaces/reward.interface';
+import { RewardInterface } from '../common/interfaces/reward.interface';
 import { RewardQuality } from '../game/types';
 
 import slotmachineService from './slotmachine.service';

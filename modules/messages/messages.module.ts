@@ -93,9 +93,9 @@ class MessagesModule {
     logger.info(`Private message!`);
     messages.forEach((message) =>
       logger.info(
-        `  ${conversation?.members.find(
-          (member) => member.id === message.characterFromId,
-        )} writes: ${message.message}`,
+        `  ${
+          conversation?.members.find((member) => member.id === message.characterFromId)?.name
+        } writes: ${message.message}`,
       ),
     );
   }

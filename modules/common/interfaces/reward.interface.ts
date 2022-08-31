@@ -1,0 +1,33 @@
+export interface RewardInterface {
+  xp: number;
+  coins: number;
+  honor: number;
+  premium: number;
+  item: number;
+  booster?: string;
+  dungeon_key?: number;
+  movie_votes?: number;
+  title?: string;
+  improvement_point?: number;
+  movie_progress?: number;
+  story_dungeon_point?: number;
+  repeat_story_dungeon_index?: number;
+  optical_change_resource?: number;
+  optical_change?: number;
+  streaming_resource?: number;
+  fans?: number;
+  fan_foto_resource?: number;
+  event_item?: string;
+  herobook_item_common?: string;
+  herobook_item_rare?: string;
+  herobook_item_epic?: string;
+  slotmachine_jetons?: number;
+  quest_energy?: number;
+  statPoints?: number;
+  artifact_id?: number;
+  artifact_stolen?: number;
+  missiles?: number;
+  dating_item?: string;
+  repeat_dating_index?: number;
+  guild_competition_item?: string;
+}

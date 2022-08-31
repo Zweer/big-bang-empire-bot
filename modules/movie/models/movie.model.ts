@@ -1,4 +1,4 @@
-import { RewardInterface } from '../../game/interfaces/reward.interface';
+import { RewardInterface } from '../../common/interfaces/reward.interface';
 import { MovieInterface } from '../interfaces/movie.interface';
 import { MovieStatus } from '../types';
 
