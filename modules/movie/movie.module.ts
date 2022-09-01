@@ -161,6 +161,7 @@ class MovieModule {
 
       const movie = this.moviesToVote[0];
 
+      logger.info(`Voting for a movie`);
       await movieService.voteForMovie(movie);
     }
   }
