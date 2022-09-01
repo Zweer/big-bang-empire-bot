@@ -66,7 +66,7 @@ export class MovieModel {
     this.stat = movie.stat;
     this.neededEnergy = movie.needed_energy;
     this.duration = movie.duration;
-    this.tsEnd = new Date(movie.ts_end);
+    this.tsEnd = new Date(movie.ts_end * 1000);
     this.movieQuestId = movie.movie_quest_id;
     this.movieQuestPool = movie.movie_quest_pool;
     this.claimedStars = movie.claimed_stars;
