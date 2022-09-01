@@ -87,7 +87,7 @@ class StoryModule {
       character.questEnergyRefillAmountToday < 200 &&
       character.questEnergy + 50 < character.maxQuestEnergy
     ) {
-      console.log(`Buying more energy`);
+      logger.info(`Buying more energy`);
       await storyService.buyQuestEnergy();
     }
   }
