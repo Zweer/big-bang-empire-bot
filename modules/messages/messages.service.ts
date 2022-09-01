@@ -19,10 +19,14 @@ class MessagesService {
     });
   }
 
-  async redeemVoucher(voucher: UserVoucherModel) {
+  async redeemVoucher(voucher: UserVoucherModel): Promise<void> {
     await request.post('redeemVoucher', {
       code: voucher.code,
     });
+  }
+
+  async acceptAllResourceRequests(): Promise<void> {
+    await request.post('acceptAllResourceRequests');
   }
 }
 

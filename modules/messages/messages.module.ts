@@ -63,8 +63,13 @@ class MessagesModule {
           await this.handlePrivateStream(stream);
           break;
 
+        case 'r':
+          await messagesService.getStreamMessages(stream);
+          await messagesService.acceptAllResourceRequests();
+          break;
+
         default:
-          // do nothing
+          logger.info(`Unknown stream type ${stream.type}`);
           break;
       }
     }, Promise.resolve());
