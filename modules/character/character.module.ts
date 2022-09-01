@@ -14,7 +14,7 @@ class CharacterModule {
 
   get hasOpticalChangesSmall() {
     return (
-      gameModule.game.current_optical_changes.resource >
+      gameModule.game.current_optical_changes.resource >=
       environment.game.constants.optical_change_chest_price_small
     );
   }
