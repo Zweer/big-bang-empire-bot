@@ -2,7 +2,7 @@ import logger from '../../libs/log';
 import gameModule from '../game/game.module';
 import characterModule from '../character/character.module';
 
-import { QuestStatus } from './types';
+import { FightQuestDifficulty, QuestStatus, QuestType } from './types';
 import { QuestModel } from './models/quest.model';
 import storyService from './story.service';
 import { QuestInterface } from './interfaces/quest.interface';
@@ -73,6 +73,8 @@ class StoryModule {
 
     if (quest) {
       logger.info(`Starting a new quest:`);
+      logger.info(`  - ${QuestType[quest.type]} type`);
+      logger.info(`  - ${FightQuestDifficulty[quest.fightDifficulty]} difficulty`);
       logger.info(`  - ${quest.energyCost} energy`);
       logger.info(`  - ${Math.round(quest.effectiveness)} xp/energy`);
       quest.rewards.super.forEach((reward) => logger.info(`  - with a ${reward}`));

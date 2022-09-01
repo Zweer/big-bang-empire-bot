@@ -1,6 +1,6 @@
 import { RewardModel } from '../../common/models/reward.model';
 import { QuestInterface } from '../interfaces/quest.interface';
-import { QuestStatus } from '../types';
+import { FightQuestDifficulty, QuestStatus, QuestType } from '../types';
 
 export class QuestModel {
   static sort(questA: QuestModel, questB: QuestModel) {
@@ -17,7 +17,7 @@ export class QuestModel {
   id: number;
   characterId: number;
   identifier: string;
-  type: number;
+  type: QuestType;
   stat: number;
   stage: number;
   level: number;
@@ -27,7 +27,7 @@ export class QuestModel {
   duration: number;
   tsComplete: Date;
   energyCost: number;
-  fightDifficulty: number;
+  fightDifficulty: FightQuestDifficulty;
   fightNpcIdentifier: string;
   fightBattleId: number;
   won: boolean;
