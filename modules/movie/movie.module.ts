@@ -14,7 +14,7 @@ import movieService from './movie.service';
 
 class MovieModule {
   get hasMovieGoingOn(): boolean {
-    return Boolean(gameModule.game.movie) && gameModule.game.movie.status !== MovieStatus.Completed;
+    return Boolean(gameModule.game.movie) && gameModule.game.movie.status !== MovieStatus.Finished;
   }
 
   get movie(): MovieModel {
