@@ -1,8 +1,9 @@
 import pluralize from 'pluralize';
 import numbro from 'numbro';
+import { mergeWith } from 'lodash';
 
 import environment from '../../configs/environment';
-import bigBangEmpire from '../game/game.module';
+import gameModule from '../game/game.module';
 import logger from '../../libs/log';
 import characterModule from '../character/character.module';
 
@@ -13,13 +14,11 @@ import movieService from './movie.service';
 
 class MovieModule {
   get hasMovieGoingOn(): boolean {
-    return (
-      Boolean(bigBangEmpire.game.movie) && bigBangEmpire.game.movie.status !== MovieStatus.Completed
-    );
+    return Boolean(gameModule.game.movie) && gameModule.game.movie.status !== MovieStatus.Completed;
   }
 
   get movie(): MovieModel {
-    return bigBangEmpire.game.movie && new MovieModel(bigBangEmpire.game.movie);
+    return gameModule.game.movie && new MovieModel(gameModule.game.movie);
   }
 
   get maxMoviesPerDay(): number {
@@ -27,11 +26,11 @@ class MovieModule {
   }
 
   get moviesStartedToday(): number {
-    return bigBangEmpire.game.character.movies_started_today;
+    return gameModule.game.character.movies_started_today;
   }
 
   get movieNeededEnergy(): number {
-    return bigBangEmpire.game.movie.needed_energy;
+    return gameModule.game.movie.needed_energy;
   }
 
   getMovieNeededEnergyStar(starIndex: number): number {
@@ -58,15 +57,15 @@ class MovieModule {
   }
 
   get movieActualEnergy(): number {
-    return bigBangEmpire.game.movie.energy;
+    return gameModule.game.movie.energy;
   }
 
   get movieStarsClaimed(): number {
-    return bigBangEmpire.game.movie.claimed_stars;
+    return gameModule.game.movie.claimed_stars;
   }
 
   get moviesToVote(): MovieModel[] {
-    return bigBangEmpire.game.movies_to_vote.map((movie) => new MovieModel(movie));
+    return gameModule.game.movies_to_vote.map((movie) => new MovieModel(movie));
   }
 
   async checkMovie(): Promise<void> {
@@ -80,7 +79,7 @@ class MovieModule {
 
       await movieService.refreshMoviePool();
 
-      const movies = bigBangEmpire.game.movies
+      const movies = gameModule.game.movies
         .map((movie) => new MovieModel(movie))
         .sort((movieA, movieB) => movieB.fans - movieA.fans);
 
@@ -89,6 +88,10 @@ class MovieModule {
       logger.info(`  selecting the movie: +${pluralize('fan', movie.fans, true)}`);
 
       await movieService.startMovie(movie);
+
+      if (typeof gameModule.game.movie.needed_energy === 'undefined') {
+        mergeWith(gameModule.game.movie.needed_energy, movie);
+      }
     }
   }
 
@@ -106,7 +109,7 @@ class MovieModule {
   async checkMovieQuest() {
     if (this.hasMovieGoingOn) {
       const character = characterModule.character;
-      const quests = bigBangEmpire.game.movie_quests
+      const quests = gameModule.game.movie_quests
         .map((quest) => new MovieQuestModel(quest))
         .sort((questA, questB) => MovieQuestModel.sort(questA, questB));
       const quest = quests[0];
