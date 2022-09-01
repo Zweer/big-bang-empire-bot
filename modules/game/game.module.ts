@@ -71,7 +71,9 @@ class GameModule {
       await storyModule.handleBuyEnergy();
 
       await movieModule.checkMovie();
+      await movieModule.checkMovieExpired();
       await movieModule.checkMovieQuest();
+      await movieModule.checkMovieStars();
 
       await slotmachineModule.checkAvailableSpin();
 

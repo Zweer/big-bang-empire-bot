@@ -50,6 +50,12 @@ class MovieService {
       movie_id: movie.id.toString(),
     });
   }
+
+  async extendMovieTime(usePremium = false): Promise<void> {
+    await request.post('extendMovieTime', {
+      use_premium: usePremium ? 'true' : 'false',
+    });
+  }
 }
 
 export default new MovieService();

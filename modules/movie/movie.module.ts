@@ -92,6 +92,17 @@ class MovieModule {
     }
   }
 
+  async checkMovieExpired(): Promise<void> {
+    if (this.hasMovieGoingOn) {
+      const movie = this.movie;
+
+      if (movie.tsEnd < new Date()) {
+        logger.debug(`Expending movie duration`);
+        await movieService.extendMovieTime();
+      }
+    }
+  }
+
   async checkMovieQuest() {
     if (this.hasMovieGoingOn) {
       const character = characterModule.character;
@@ -120,16 +131,21 @@ class MovieModule {
       } else {
         logger.debug(`Not enough movie energy... waiting!`);
       }
+    }
+  }
 
+  async checkMovieStars(): Promise<void> {
+    if (this.hasMovieGoingOn) {
       if (
-        (this.movieActualEnergy > this.movieNeededEnergy1Star && this.movieStarsClaimed < 1) ||
-        (this.movieActualEnergy > this.movieNeededEnergy2Star && this.movieStarsClaimed < 2) ||
-        (this.movieActualEnergy > this.movieNeededEnergy3Star && this.movieStarsClaimed < 3)
+        (this.movieActualEnergy >= this.movieNeededEnergy1Star && this.movieStarsClaimed < 1) ||
+        (this.movieActualEnergy >= this.movieNeededEnergy2Star && this.movieStarsClaimed < 2) ||
+        (this.movieActualEnergy >= this.movieNeededEnergy3Star && this.movieStarsClaimed < 3)
       ) {
+        logger.info(`Claiming a movie star`);
         await movieService.claimMovieStar();
       }
 
-      if (this.movieActualEnergy === this.movieNeededEnergy) {
+      if (this.movieActualEnergy >= this.movieNeededEnergy) {
         logger.info(`Finishing movie...`);
         await movieService.finishMovie();
       }
