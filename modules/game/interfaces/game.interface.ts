@@ -7,6 +7,7 @@ import { MissedDuelInterface } from '../../duels/interfaces/missedDuels.interfac
 import { OpponentInterface } from '../../duels/interfaces/opponent.interface';
 import { InventoryInterface } from '../../inventory/interfaces/inventory.interface';
 import { ItemInterface } from '../../inventory/interfaces/item.interface';
+import { ItemPatternValueInterface } from '../../inventory/interfaces/itemPatternValue.interface';
 import { PrivateConversationInterface } from '../../messages/interfaces/privateConversation.interface';
 import { PrivateConversationMessageInterface } from '../../messages/interfaces/privateConversationMessage.interface';
 import { StreamInfoInterface } from '../../messages/interfaces/streamInfo.interface';
@@ -78,12 +79,6 @@ interface CollectedGoal {
     value: number;
     date: string;
   };
-}
-
-interface ItemPatternValue {
-  value: number;
-  collected_items: string[];
-  is_new: boolean;
 }
 
 interface Offer {
@@ -320,7 +315,7 @@ export interface GameInterface {
   global_tournament_end_timestamp: number;
   current_goal_values: { [key: string]: Goal };
   collected_goals: CollectedGoal[];
-  current_item_pattern_values: { [key: string]: ItemPatternValue };
+  current_item_pattern_values: { [key: string]: ItemPatternValueInterface };
   collected_item_pattern: CollectedGoal[];
   current_optical_changes: CurrentOpticalChangesInterface;
   collected_optical_changes: CollectedGoal[];

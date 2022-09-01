@@ -106,7 +106,7 @@ class MovieModule {
             forceSign: true,
           })} progress`,
         );
-        if (quest.rewards.item) {
+        if (quest.rewards.itemId) {
           logger.info(`  with an item!`);
         }
 

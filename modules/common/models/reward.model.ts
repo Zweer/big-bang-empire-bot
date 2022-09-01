@@ -1,3 +1,4 @@
+import { ItemModel } from '../../inventory/models/item.model';
 import { RewardInterface } from '../interfaces/reward.interface';
 
 import { BoosterModel } from './booster.model';
@@ -7,7 +8,7 @@ export class RewardModel {
   coins: number;
   honor: number;
   premium: number;
-  item: number;
+  itemId: number;
   booster?: BoosterModel;
   dungeonKey?: number;
   movieVotes?: number;
@@ -39,6 +40,10 @@ export class RewardModel {
     return this.herobookItemCommon ?? this.herobookItemRare ?? this.herobookItemEpic;
   }
 
+  get item(): ItemModel | undefined {
+    return this.itemId ? ItemModel.retrieve(this.itemId) : undefined;
+  }
+
   get priority(): number {
     if (this.dungeonKey) {
       return 20;
@@ -48,11 +53,19 @@ export class RewardModel {
       return 19;
     }
 
+    if (this.item?.isUnKnownPattern) {
+      return 18;
+    }
+
+    if (this.item?.isBetterThanEquipped) {
+      return 17;
+    }
+
     if (this.booster) {
       return 6;
     }
 
-    if (this.item) {
+    if (this.itemId) {
       return 5;
     }
 
@@ -78,7 +91,7 @@ export class RewardModel {
         'coins',
         'honor',
         'premium',
-        'item',
+        'itemId',
         'booster',
         'dungeonKey',
         'movieVotes',
@@ -118,7 +131,7 @@ export class RewardModel {
     this.coins = reward.coins;
     this.honor = reward.honor;
     this.premium = reward.premium;
-    this.item = reward.item;
+    this.itemId = reward.item;
     this.booster =
       typeof reward.booster === 'string' ? new BoosterModel(JSON.parse(reward.booster)) : undefined;
     this.dungeonKey = reward.dungeon_key;

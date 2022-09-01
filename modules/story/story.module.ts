@@ -56,7 +56,10 @@ class StoryModule {
 
     const currentQuest = this.quest;
 
-    if (currentQuest && currentQuest.status !== QuestStatus.RewardsProcessed) {
+    if (
+      currentQuest &&
+      ![QuestStatus.Finished, QuestStatus.RewardsProcessed].includes(currentQuest.status)
+    ) {
       logger.debug(`Another quest in progress`);
       return;
     }

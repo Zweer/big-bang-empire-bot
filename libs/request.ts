@@ -5,8 +5,8 @@ import { isArray, mergeWith } from 'lodash';
 
 import { Response } from '../interfaces/response';
 import staticConfig from '../configs/static';
-
 import bigBangEmpire from '../modules/game/game.module';
+
 import logger from './log';
 
 class Request {

@@ -10,7 +10,7 @@ import { ItemType } from './types';
 
 class InventoryModule {
   get inventory(): Inventory {
-    return new Inventory(gameModule.game.inventory, gameModule.game.items);
+    return new Inventory(gameModule.game.inventory);
   }
 
   async improveInventory(): Promise<void> {
@@ -88,12 +88,7 @@ class InventoryModule {
     await inventory.shopItems.reduce(async (promise, item) => {
       await promise;
 
-      const identifier = item.identifier;
-      const template = environment.game.constants.item_templates[identifier];
-      const pattern = template.item_pattern;
-      const currentPattern = gameModule.game.current_item_pattern_values[pattern];
-
-      if (currentPattern && !currentPattern.collected_items.includes(identifier)) {
+      if (item.isUnKnownPattern) {
         logger.info(`Found an item you don't have`);
         await this.buyShopItem(item);
       }

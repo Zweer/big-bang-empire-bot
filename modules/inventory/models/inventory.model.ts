@@ -40,27 +40,17 @@ export class Inventory {
 
   itemSetData: string;
 
-  constructor(inventory: InventoryInterface, items: ItemInterface[]) {
-    const createItem = (id: number, bagSlotId = 0, shopSlotId = 0): ItemModel | undefined => {
-      const item = items.find((i) => i.id === id);
-
-      if (item) {
-        return new ItemModel(item, bagSlotId, shopSlotId);
-      }
-
-      return undefined;
-    };
-
-    this.headItem = createItem(inventory.head_item_id);
-    this.chestItem = createItem(inventory.chest_item_id);
-    this.beltItem = createItem(inventory.belt_item_id);
-    this.legsItem = createItem(inventory.legs_item_id);
-    this.bootsItem = createItem(inventory.boots_item_id);
-    this.necklaceItem = createItem(inventory.necklace_item_id);
-    this.ringItem = createItem(inventory.ring_item_id);
-    this.piercingItem = createItem(inventory.piercing_item_id);
-    this.gadgetItem = createItem(inventory.gadget_item_id);
-    this.missilesItem = createItem(inventory.missiles_item_id);
+  constructor(inventory: InventoryInterface) {
+    this.headItem = ItemModel.retrieve(inventory.head_item_id);
+    this.chestItem = ItemModel.retrieve(inventory.chest_item_id);
+    this.beltItem = ItemModel.retrieve(inventory.belt_item_id);
+    this.legsItem = ItemModel.retrieve(inventory.legs_item_id);
+    this.bootsItem = ItemModel.retrieve(inventory.boots_item_id);
+    this.necklaceItem = ItemModel.retrieve(inventory.necklace_item_id);
+    this.ringItem = ItemModel.retrieve(inventory.ring_item_id);
+    this.piercingItem = ItemModel.retrieve(inventory.piercing_item_id);
+    this.gadgetItem = ItemModel.retrieve(inventory.gadget_item_id);
+    this.missilesItem = ItemModel.retrieve(inventory.missiles_item_id);
 
     this.bagItems = Object.entries(inventory)
       .filter(([key, id]) => key.startsWith(Inventory.BAG_PREFIX) && id > 0)
@@ -70,9 +60,9 @@ export class Inventory {
           10,
         );
 
-        return createItem(id, bagSlotId) as ItemModel;
+        return ItemModel.retrieve(id, bagSlotId);
       })
-      .filter((item) => item);
+      .filter((item) => item) as ItemModel[];
 
     this.shopItems = Object.entries(inventory)
       .filter(([key, id]) => key.startsWith(Inventory.SHOP_PREFIX) && id > 0)
@@ -82,9 +72,9 @@ export class Inventory {
           10,
         );
 
-        return createItem(id, 0, shopSlotId) as ItemModel;
+        return ItemModel.retrieve(id, 0, shopSlotId);
       })
-      .filter((item) => item);
+      .filter((item) => item) as ItemModel[];
 
     this.itemSetData = inventory.item_set_data;
   }

@@ -1,4 +1,5 @@
 import { Locale } from '../../modules/game/types';
+import { ItemTemplateInterface } from '../../modules/inventory/interfaces/itemTemplate.interface';
 import { GoalInterface } from '../../modules/profile/interfaces/goal.interface';
 
 import { EnvironmentConfigInterface } from './environment.interface';
@@ -292,23 +293,6 @@ interface ItemPattern {
 interface ItemReward {
   chance: number;
   identifiers: string;
-}
-
-interface ItemTemplate {
-  type: number;
-  gender: string;
-  quality: number;
-  required_level: number;
-  ts_unlock?: string;
-  display_options: number;
-  display_options_f: null;
-  sew_price: number;
-  item_set_identifier: null;
-  item_pattern: string;
-  is_event: boolean;
-  effect_chance: number;
-  effects?: string;
-  asset_bundle_id: number;
 }
 
 interface Level {
@@ -1326,7 +1310,7 @@ export interface GameConfigInterface {
     item_pattern: { [key: string]: ItemPattern };
     item_rewards: { [key: string]: ItemReward[] };
     item_set_templates: [];
-    item_templates: { [key: string]: ItemTemplate };
+    item_templates: { [key: string]: ItemTemplateInterface };
     levels: { [key: string]: Level };
     messages: { [key: string]: Message };
     movie_cover_settings: { [key: string]: number[] };
