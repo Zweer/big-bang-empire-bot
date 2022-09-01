@@ -4,7 +4,7 @@ const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
     winston.format.timestamp({
-      format: 'YYYY-mm-dd HH:MM:ss',
+      format: 'YYYY-MM-dd HH:mm:ss',
     }),
     winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
   ),
