@@ -25,7 +25,7 @@ export class MovieModel {
   stat: number;
   neededEnergy: number;
   duration: number;
-  tsEnd: number;
+  tsEnd: Date;
   movieQuestId: number;
   movieQuestPool: string;
   claimedStars: number;
@@ -37,6 +37,10 @@ export class MovieModel {
 
   get completionPercentage(): number {
     return this.energy / this.neededEnergy;
+  }
+
+  get eta(): number {
+    return this.tsEnd.getTime() - new Date().getTime();
   }
 
   constructor(movie: MovieInterface) {
@@ -62,7 +66,7 @@ export class MovieModel {
     this.stat = movie.stat;
     this.neededEnergy = movie.needed_energy;
     this.duration = movie.duration;
-    this.tsEnd = movie.ts_end;
+    this.tsEnd = new Date(movie.ts_end);
     this.movieQuestId = movie.movie_quest_id;
     this.movieQuestPool = movie.movie_quest_pool;
     this.claimedStars = movie.claimed_stars;
