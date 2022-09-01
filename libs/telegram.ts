@@ -91,7 +91,7 @@ Commands are:
           `- movie: ${numbro(movie.completionPercentage).format({
             output: 'percent',
             mantissa: 2,
-          })}`,
+          })} (${numbro(movie.eta / 1000).formatTime()})`,
         );
         msg.push(`- movie energy: ${character.movieEnergy}`);
       }
