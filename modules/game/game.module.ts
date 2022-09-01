@@ -68,6 +68,7 @@ class GameModule {
 
       await storyModule.checkForQuestComplete();
       await storyModule.autoQuest();
+      await storyModule.handleBuyEnergy();
 
       await movieModule.checkMovie();
       await movieModule.checkMovieQuest();
