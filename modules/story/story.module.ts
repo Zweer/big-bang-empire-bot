@@ -8,15 +8,18 @@ import storyService from './story.service';
 import { QuestInterface } from './interfaces/quest.interface';
 
 class StoryModule {
-  get quest(): QuestModel {
+  get quest(): QuestModel | undefined {
+    if (characterModule.character.activeQuestId === 0) {
+      return undefined;
+    }
+
     return (
       (gameModule.game.quest && new QuestModel(gameModule.game.quest)) ||
-      (characterModule.character.activeQuestId &&
-        new QuestModel(
-          gameModule.game.quests.find(
-            (quest) => quest.id === characterModule.character.activeQuestId,
-          ) as QuestInterface,
-        ))
+      new QuestModel(
+        gameModule.game.quests.find(
+          (quest) => quest.id === characterModule.character.activeQuestId,
+        ) as QuestInterface,
+      )
     );
   }
 
@@ -40,7 +43,7 @@ class StoryModule {
       await storyService.checkForQuestComplete();
     }
 
-    quest = this.quest;
+    quest = this.quest as QuestModel;
 
     if (quest.status === QuestStatus.Finished) {
       logger.info(`Claiming quest rewards`);
