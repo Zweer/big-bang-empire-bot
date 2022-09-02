@@ -123,6 +123,10 @@ Commands are:
       context.reply(msg.join('\n'));
     });
   }
+
+  async send(msg: string) {
+    await this.telegraf.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID as string, msg);
+  }
 }
 
 export default new Telegram();

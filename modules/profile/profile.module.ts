@@ -68,11 +68,8 @@ class ProfileModule {
       return;
     }
 
-    logger.info(
-      `Reached ${pluralize('goal', currentGoals.length, true)}:\n${currentGoals
-        .map(({ name }) => `- ${name}`)
-        .join('\n')}`,
-    );
+    logger.info(`Reached ${pluralize('goal', currentGoals.length, true)}:`);
+    currentGoals.forEach(({ name }) => logger.info(`- ${name}`));
 
     await currentGoals.reduce(
       (promise, currentGoal) => promise.then(() => profileService.collectGoalReward(currentGoal)),
