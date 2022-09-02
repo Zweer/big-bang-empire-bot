@@ -90,7 +90,7 @@ class MovieModule {
       await movieService.startMovie(movie);
 
       if (typeof gameModule.game.movie.needed_energy === 'undefined') {
-        mergeWith(gameModule.game.movie, movie);
+        gameModule.game.movie = mergeWith(gameModule.game.movie, movie);
       }
     }
   }
