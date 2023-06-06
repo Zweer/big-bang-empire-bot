@@ -5,4 +5,8 @@ if (!token) {
   throw new Error('BOT_TOKEN is unset');
 }
 
-export default new Bot(token);
+const bot = new Bot(token);
+
+bot.command('start', (ctx) => ctx.reply('Welcome to the Big Bag Empire Bot!'));
+
+export default bot;
