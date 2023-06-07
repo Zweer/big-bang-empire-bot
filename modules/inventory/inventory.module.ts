@@ -49,7 +49,7 @@ class InventoryModule {
       }
 
       if (oldItem.battleSkill) {
-        logger.info(
+        logger.debug(
           `Found a possibly better item for ${
             ItemType[otherItem.type]
           } slot, but there is a battle skill (${otherItem.statsTotal} vs ${oldItem.statsTotal})`,
