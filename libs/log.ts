@@ -2,7 +2,7 @@ import winston from 'winston';
 import Transport from 'winston-transport';
 import { MESSAGE } from 'triple-beam';
 
-import telegram from './telegram';
+import telegram from './bot';
 
 class TelegramTransport extends Transport {
   log(info: any, next: () => void) {

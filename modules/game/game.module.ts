@@ -16,7 +16,7 @@ import storyModule from '../story/story.module';
 
 import { GameInterface } from './interfaces/game.interface';
 
-import '../../libs/telegram';
+import '../../libs/bot';
 
 class GameModule {
   get userId(): string {

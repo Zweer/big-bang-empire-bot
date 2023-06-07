@@ -1,5 +1,6 @@
+import { run, RunnerHandle } from '@grammyjs/runner';
 import numbro from 'numbro';
-import { Telegraf } from 'telegraf';
+import { Bot as GrammyBot } from 'grammy';
 
 import environment from '../configs/environment';
 import characterModule from '../modules/character/character.module';
@@ -10,29 +11,31 @@ import profileModule from '../modules/profile/profile.module';
 import { LeaderboardSortType } from '../modules/profile/types';
 import storyModule from '../modules/story/story.module';
 
-class Telegram {
-  private readonly telegraf: Telegraf;
+class Bot {
+  private readonly bot: GrammyBot;
+
+  private runner: RunnerHandle;
 
   constructor() {
-    this.telegraf = new Telegraf(process.env.TELEGRAM_TOKEN as string);
+    this.bot = new GrammyBot(process.env.TELEGRAM_TOKEN as string);
 
     this.initHelp();
     this.initProfile();
     this.initCharacter();
+  }
 
-    this.telegraf.launch();
-
-    // Enable graceful stop
-    process.once('SIGINT', () => this.telegraf.stop('SIGINT'));
-    process.once('SIGTERM', () => this.telegraf.stop('SIGTERM'));
+  start() {
+    this.runner = run(this.bot);
   }
 
   stop() {
-    this.telegraf.stop();
+    if (this.runner && this.runner.isRunning()) {
+      this.runner.stop();
+    }
   }
 
   initHelp() {
-    this.telegraf.help((context) =>
+    this.bot.command('help', (context) =>
       context.reply(`From here you can control your Big Bang Empire Bot.
 Commands are:
 /help - View this help message
@@ -43,7 +46,7 @@ Commands are:
   }
 
   initProfile() {
-    this.telegraf.command('profile', async (context) => {
+    this.bot.command('profile', async (context) => {
       const character = characterModule.character;
       const user = profileModule.user;
 
@@ -107,7 +110,7 @@ Commands are:
   }
 
   initCharacter() {
-    this.telegraf.command('character', (context) => {
+    this.bot.command('character', (context) => {
       const character = characterModule.character;
       const inventory = inventoryModule.inventory;
 
@@ -125,8 +128,8 @@ Commands are:
   }
 
   async send(msg: string) {
-    await this.telegraf.telegram.sendMessage(process.env.TELEGRAM_CHAT_ID as string, msg);
+    await this.bot.api.sendMessage(process.env.BOT_ID as string, msg);
   }
 }
 
-export default new Telegram();
+export default new Bot();
