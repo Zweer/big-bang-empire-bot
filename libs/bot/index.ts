@@ -1,5 +1,4 @@
 import { Conversation, conversations, createConversation } from '@grammyjs/conversations';
-import { kv } from '@vercel/kv';
 import { Bot, Context, SessionFlavor, session } from 'grammy';
 
 import { VercelAdapter } from './vercel-adapter';
@@ -55,10 +54,7 @@ bot.on('message', async (ctx, next) => {
 });
 
 bot.command('start', async (ctx) => {
-  const username = ctx.me.id;
-  const user = await kv.get(username.toString());
-
-  await ctx.reply(user as string);
+  await ctx.reply(`Your email is "${ctx.session.email}"`);
 });
 
 export default bot;
