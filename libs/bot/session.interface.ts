@@ -1,5 +1,5 @@
 export interface SessionInterface {
-  username?: string;
+  email?: string;
   password?: string;
   server?: string;
 }
