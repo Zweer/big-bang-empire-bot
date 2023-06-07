@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import pluralize from 'pluralize';
 
 import environment from '../static/environment';
@@ -10,12 +11,24 @@ import { RewardQuality } from '../game/types';
 import slotmachineService from './slotmachine.service';
 
 class SlotmachineModule {
-  async checkAvailableSpin() {
-    const character = characterModule.character;
-    if (
-      character.slotmachineJeton >
+  get hasEnoughJeton(): boolean {
+    return (
+      characterModule.character.slotmachineJeton >
       environment.game.constants.resource_slotmachine_jeton_usage_amount
-    ) {
+    );
+  }
+
+  get isSlotmachineOpen(): boolean {
+    const now = DateTime.now();
+
+    return (
+      DateTime.fromSQL(environment.game.constants.slotmachine_event_start) < now &&
+      DateTime.fromSQL(environment.game.constants.slotmachine_event_end) > now
+    );
+  }
+
+  async checkAvailableSpin() {
+    if (this.hasEnoughJeton && this.isSlotmachineOpen) {
       await slotmachineService.getLastSlotmachineWins();
       await slotmachineService.addUserToSlotmachineRoom();
       await slotmachineService.spinSlotMachine();
