@@ -1,4 +1,4 @@
-import environmentConfig from '../../configs/environment';
+import environmentConfig from '../static/environment';
 import gameModule from '../game/game.module';
 
 import datingService from './dating.service';

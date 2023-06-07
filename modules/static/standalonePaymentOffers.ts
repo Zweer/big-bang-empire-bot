@@ -3,15 +3,15 @@ import {
   NormalOffer,
   SpecialOffer,
   StandalonePaymentOffersInterface,
-} from '../interfaces/configs/standalonePaymentOffers.interface';
-import bigBangEmpire from '../modules/game/game.module';
-import request from '../libs/request';
+} from '../../interfaces/configs/standalonePaymentOffers.interface';
+import bigBangEmpire from '../game/game.module';
+import request from '../../libs/request';
 
 class StandalonePaymentOffers {
-  text!: { [key: string]: string };
-  normalOffers!: NormalOffer[];
-  specialOffers!: SpecialOffer[];
-  consumableOffers!: ConsumableOffer[];
+  text: { [key: string]: string };
+  normalOffers: NormalOffer[];
+  specialOffers: SpecialOffer[];
+  consumableOffers: ConsumableOffer[];
 
   async init(): Promise<void> {
     const data = await request.post<StandalonePaymentOffersInterface>(

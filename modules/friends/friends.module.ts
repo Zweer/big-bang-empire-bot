@@ -2,7 +2,7 @@ import friendsService from './friends.service';
 import { FriendInterface } from './interfaces/loginFriendBar.interface';
 
 class FriendsModule {
-  friends!: FriendInterface[];
+  friends: FriendInterface[];
 
   async init(): Promise<void> {
     const data = await friendsService.loginFriendBar();

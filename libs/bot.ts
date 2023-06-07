@@ -2,7 +2,7 @@ import { run, RunnerHandle } from '@grammyjs/runner';
 import numbro from 'numbro';
 import { Bot as GrammyBot } from 'grammy';
 
-import environment from '../configs/environment';
+import environment from '../modules/static/environment';
 import characterModule from '../modules/character/character.module';
 import gameModule from '../modules/game/game.module';
 import inventoryModule from '../modules/inventory/inventory.module';
@@ -17,7 +17,7 @@ class Bot {
   private runner: RunnerHandle;
 
   constructor() {
-    this.bot = new GrammyBot(process.env.TELEGRAM_TOKEN as string);
+    this.bot = new GrammyBot(process.env.BOT_TOKEN as string);
 
     this.initHelp();
     this.initProfile();

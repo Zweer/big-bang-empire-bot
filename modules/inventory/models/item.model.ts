@@ -1,4 +1,4 @@
-import environment from '../../../configs/environment';
+import environment from '../../static/environment';
 import gameModule from '../../game/game.module';
 import { InventoryInterface } from '../interfaces/inventory.interface';
 import { ItemInterface } from '../interfaces/item.interface';

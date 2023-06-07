@@ -1,6 +1,6 @@
 import pluralize from 'pluralize';
 
-import environmentConfig from '../../configs/environment';
+import environmentConfig from '../static/environment';
 import logger from '../../libs/log';
 import gameModule from '../game/game.module';
 

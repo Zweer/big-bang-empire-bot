@@ -1,4 +1,4 @@
-import environment from '../../configs/environment';
+import environment from '../static/environment';
 import logger from '../../libs/log';
 import gameModule from '../game/game.module';
 

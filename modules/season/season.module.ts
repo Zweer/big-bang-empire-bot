@@ -1,4 +1,4 @@
-import environmentConfig from '../../configs/environment';
+import environmentConfig from '../static/environment';
 import bigBangEmpire from '../game/game.module';
 import logger from '../../libs/log';
 

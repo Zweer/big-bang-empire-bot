@@ -1,7 +1,6 @@
 import gameModule from '../game/game.module';
 import logger from '../../libs/log';
-import environment from '../../configs/environment';
-import characterModule from '../character/character.module';
+import environment from '../static/environment';
 
 import { Inventory } from './models/inventory.model';
 import inventoryService from './inventory.service';
@@ -53,9 +52,7 @@ class InventoryModule {
         logger.info(
           `Found a possibly better item for ${
             ItemType[otherItem.type]
-          } slot, but they both have battle skill (${otherItem.statsTotal} vs ${
-            oldItem.statsTotal
-          })`,
+          } slot, but there is a battle skill (${otherItem.statsTotal} vs ${oldItem.statsTotal})`,
         );
         return;
       }

@@ -1,4 +1,4 @@
-import environment from '../../../configs/environment';
+import environment from '../../static/environment';
 import { Gender, Locale } from '../../game/types';
 import { CharacterInterface } from '../interfaces/character.interface';
 import { StatType } from '../types';

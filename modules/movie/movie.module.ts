@@ -2,7 +2,7 @@ import pluralize from 'pluralize';
 import numbro from 'numbro';
 import { mergeWith } from 'lodash';
 
-import environment from '../../configs/environment';
+import environment from '../static/environment';
 import gameModule from '../game/game.module';
 import logger from '../../libs/log';
 import characterModule from '../character/character.module';

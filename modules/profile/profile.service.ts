@@ -30,7 +30,7 @@ class ProfileService {
     }
   }
 
-  async claimDailyBonusRewardReward(dailyBonusReward): Promise<void> {
+  async claimDailyBonusRewardReward(dailyBonusReward: any): Promise<void> {
     await request.post('claimDailyBonusRewardReward', {
       id: dailyBonusReward.id,
       discard_item: 'false',

@@ -4,16 +4,14 @@ import axios from 'axios';
 import { isArray, mergeWith } from 'lodash';
 
 import { Response } from '../interfaces/response';
-import staticConfig from '../configs/static';
+import staticConfig from '../modules/static/website';
 import bigBangEmpire from '../modules/game/game.module';
 
 import logger from './log';
 
 class Request {
-  appVersion = '123';
-
   get clientVersion(): string {
-    return `html5_${this.appVersion}`;
+    return `html5_${staticConfig.clientVersion}`;
   }
 
   async post<TResponse, TRequest extends { [key: string]: string } = { [key: string]: string }>(
