@@ -7,6 +7,8 @@ export class VercelAdapter<T> implements StorageAdapter<T> {
   async read(key: string): Promise<T | undefined> {
     const session = await kv.get<string>(key);
 
+    console.log(session);
+
     return session ? (JSON.parse(session) as unknown as T) : undefined;
   }
 
